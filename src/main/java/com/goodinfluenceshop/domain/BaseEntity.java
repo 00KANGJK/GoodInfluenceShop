@@ -13,29 +13,25 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 @Getter
 @ToString
-@EntityListeners(AuditingEntityListener.class) //이게 있어야 자동으로 값 넣어줌!!
+@EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public abstract class BaseEntity {
   @Id
-  private String id;
+  private String id; // ID
 
-  @Column(nullable = false) //이거는 테이블 컬럼에 속성을 주기 위함 입니다!! 낫 널!!!!
+  @Column(nullable = false)
   @Setter
-  protected String deleted;
-
-  @Column(nullable = true)
-  @Setter
-  protected String process;
+  protected String deleted; // 삭제여부
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   @CreatedDate
   @Column(nullable = false, updatable = false)
-  protected LocalDateTime createdAt; // 생성일시
+  protected LocalDateTime created_date; // 생성일시
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   @LastModifiedDate
   @Column(nullable = false)
-  protected LocalDateTime modifiedAt; // 수정일시
+  protected LocalDateTime modify_date; // 수정일시
 
   @PrePersist
   public void onPrePersist() {
