@@ -39,13 +39,12 @@ public class DonationService {
     return modelMapper.map(donation, DonationDto.class);
   }
 
-  public List<DonationDto> getAllDonations() {
-    List<Donation> donations = donationRepository.findAllActiveDonations();
+  public List<DonationDto> getRecentDonations() {
+    List<Donation> donations = donationRepository.findRecentDonations();
     return donations.stream()
       .map(this::convertToDto)
       .collect(Collectors.toList());
   }
-
 
   public void deleteDonation(String id) {
     Donation donation = donationRepository.findById(id)
@@ -53,6 +52,7 @@ public class DonationService {
     donation.setDeleted("Y");
     donationRepository.save(donation);
   }
+
 
 //  public Optional<DonationDto> getDonationById(String id) {
 //    return donationRepository.findById(id)
@@ -69,6 +69,12 @@ public class DonationService {
 //
 //    donation = donationRepository.save(donation);
 //    return modelMapper.map(donation, DonationDto.class);
+//  }
+//  public List<DonationDto> getAllDonations() {
+//    List<Donation> donations = donationRepository.findAllActiveDonations();
+//    return donations.stream()
+//      .map(this::convertToDto)
+//      .collect(Collectors.toList());
 //  }
 }
 
