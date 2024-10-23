@@ -15,6 +15,6 @@ public enum AnnouncementCategory {
                 return announcementCategory;
             }
         }
-        throw new IllegalArgumentException("유효하지 않은 공지사항 구분입니다.");
+        throw new IllegalArgumentException("유효하지 않은 공지 카테고리입니다.");
     }
 }

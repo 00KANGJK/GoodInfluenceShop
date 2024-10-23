@@ -6,11 +6,12 @@ import lombok.*;
 
 import java.util.List;
 
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 @Builder
+@Setter
 public class Announcement extends BaseEntity {
 
     @Column(nullable = false)

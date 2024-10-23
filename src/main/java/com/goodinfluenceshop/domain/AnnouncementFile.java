@@ -1,14 +1,15 @@
 package com.goodinfluenceshop.domain;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 @Builder
 public class AnnouncementFile extends BaseEntity {
     @ManyToOne
@@ -17,4 +18,7 @@ public class AnnouncementFile extends BaseEntity {
 
     @Column(nullable = false)
     private String filePath;
+
+    @Column(nullable = false)
+    private String originalFileName;
 }

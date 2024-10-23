@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: GoodInfluenceShop
+  config:
+    import: classpath:s3.yml
