@@ -14,11 +14,21 @@ public class AnnouncementFileDto {
     private String filePath;
     private String originalFileName;
 
-    public static List<AnnouncementFileDto> listFrom(List<FileDto> fileDtos) {
+    public static List<AnnouncementFileDto> listFromFileDtos(List<FileDto> fileDtos) {
         return fileDtos.stream()
                 .map(fileDto -> AnnouncementFileDto.builder()
                         .filePath(fileDto.getFilePath())
                         .originalFileName(fileDto.getOriginalFileName())
+                        .build())
+                .toList();
+    }
+
+    public static List<AnnouncementFileDto> listFromAnnouncementFiles(List<AnnouncementFile> announcementFiles) {
+        return announcementFiles.stream()
+                .map(announcementFile -> AnnouncementFileDto.builder()
+                        .id(announcementFile.getId())
+                        .filePath(announcementFile.getFilePath())
+                        .originalFileName(announcementFile.getOriginalFileName())
                         .build())
                 .toList();
     }

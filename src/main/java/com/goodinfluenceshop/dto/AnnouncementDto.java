@@ -27,7 +27,7 @@ public class AnnouncementDto {
                 .content(addAnnouncementDto.getContent())
                 .category(addAnnouncementDto.getCategory())
                 .isOpened(addAnnouncementDto.isOpened())
-                .announcementFiles(AnnouncementFileDto.listFrom(fileDtos))
+                .announcementFiles(AnnouncementFileDto.listFromFileDtos(fileDtos))
                 .build();
     }
 
@@ -61,6 +61,7 @@ public class AnnouncementDto {
         private String category;
         private boolean isOpened;
         private LocalDateTime createdDate;
+        private List<AnnouncementFileDto> announcementFiles;
 
         public static List<ResAdminAnnouncementDto> from(List<Announcement> announcements) {
             return announcements.stream()
@@ -73,6 +74,18 @@ public class AnnouncementDto {
                             .createdDate(announcement.getCreatedDate())
                             .build())
                     .toList();
+        }
+
+        public static ResAdminAnnouncementDto from(Announcement announcement) {
+            return ResAdminAnnouncementDto.builder()
+                    .id(announcement.getId())
+                    .title(announcement.getTitle())
+                    .content(announcement.getContent())
+                    .category(announcement.getCategory().getKor())
+                    .isOpened(announcement.isOpened())
+                    .createdDate(announcement.getCreatedDate())
+                    .announcementFiles(AnnouncementFileDto.listFromAnnouncementFiles(announcement.getAnnouncementFiles()))
+                    .build();
         }
     }
 }

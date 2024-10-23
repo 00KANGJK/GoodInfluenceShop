@@ -23,4 +23,8 @@ public class AnnouncementService {
     public List<Announcement> getAnnouncements() {
         return announcementRepository.findAll();
     }
+
+    public Announcement getAnnouncement(Long id) {
+        return announcementRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 존재하지 않습니다."));
+    }
 }

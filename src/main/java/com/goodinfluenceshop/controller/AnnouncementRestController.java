@@ -26,4 +26,9 @@ public class AnnouncementRestController {
     public ResponseEntity<List<AnnouncementDto.ResAdminAnnouncementDto>> getAnnouncements() {
         return ResponseEntity.ok(AnnouncementDto.ResAdminAnnouncementDto.from(announcementService.getAnnouncements()));
     }
+
+    @GetMapping("/api/admin/announcements/{id}")
+    public ResponseEntity<AnnouncementDto.ResAdminAnnouncementDto> getAnnouncement(@PathVariable Long id) {
+        return ResponseEntity.ok(AnnouncementDto.ResAdminAnnouncementDto.from(announcementService.getAnnouncement(id)));
+    }
 }
