@@ -27,4 +27,9 @@ public class AnnouncementService {
     public Announcement getAnnouncement(Long id) {
         return announcementRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 존재하지 않습니다."));
     }
+
+    public void updateAnnouncement(Long id, AnnouncementDto dto) {
+        Announcement announcement = announcementRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 존재하지 않습니다."));
+        announcement.update(dto);
+    }
 }

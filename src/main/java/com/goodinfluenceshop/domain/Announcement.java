@@ -1,6 +1,8 @@
 package com.goodinfluenceshop.domain;
 
 import com.goodinfluenceshop.domain.enums.AnnouncementCategory;
+import com.goodinfluenceshop.dto.AnnouncementDto;
+import com.goodinfluenceshop.dto.AnnouncementFileDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,4 +34,15 @@ public class Announcement extends BaseEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<AnnouncementFile> announcementFiles;
+
+    public void update(AnnouncementDto dto) {
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+        this.isOpened = dto.isOpened();
+        this.category = AnnouncementCategory.from(dto.getCategory());
+        if(dto.getAnnouncementFiles() != null) {
+            this.announcementFiles.clear();
+            this.announcementFiles.addAll(AnnouncementFileDto.listToEntity(dto.getAnnouncementFiles(), this));
+        }
+    }
 }

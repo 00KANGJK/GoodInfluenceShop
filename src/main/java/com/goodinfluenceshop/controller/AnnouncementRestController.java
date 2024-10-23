@@ -31,4 +31,10 @@ public class AnnouncementRestController {
     public ResponseEntity<AnnouncementDto.ResAdminAnnouncementDto> getAnnouncement(@PathVariable Long id) {
         return ResponseEntity.ok(AnnouncementDto.ResAdminAnnouncementDto.from(announcementService.getAnnouncement(id)));
     }
+
+    @PatchMapping("/api/admin/announcements/{id}")
+    public ResponseEntity<Void> updateAnnouncement(@PathVariable Long id, @ModelAttribute AnnouncementDto.UpdateAnnouncementDto updateAnnouncementDto, @RequestParam(value = "file", required = false) List<MultipartFile> file) {
+        announcementService.updateAnnouncement(id, AnnouncementDto.from(updateAnnouncementDto, fileService.uploadFiles(file, "announcement/file")));
+        return ResponseEntity.ok().build();
+    }
 }

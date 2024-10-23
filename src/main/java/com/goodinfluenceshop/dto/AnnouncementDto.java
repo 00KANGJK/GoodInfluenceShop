@@ -31,6 +31,16 @@ public class AnnouncementDto {
                 .build();
     }
 
+    public static AnnouncementDto from(UpdateAnnouncementDto updateAnnouncementDto, List<FileDto> fileDtos) {
+        return AnnouncementDto.builder()
+                .title(updateAnnouncementDto.getTitle())
+                .content(updateAnnouncementDto.getContent())
+                .category(updateAnnouncementDto.getCategory())
+                .isOpened(updateAnnouncementDto.isOpened())
+                .announcementFiles(AnnouncementFileDto.listFromFileDtos(fileDtos))
+                .build();
+    }
+
     public Announcement toEntity() {
         Announcement announcement = Announcement.builder()
                 .title(title)
@@ -87,5 +97,15 @@ public class AnnouncementDto {
                     .announcementFiles(AnnouncementFileDto.listFromAnnouncementFiles(announcement.getAnnouncementFiles()))
                     .build();
         }
+    }
+
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateAnnouncementDto {
+        private String title;
+        private String content;
+        private String category;
+        private boolean isOpened;
     }
 }
