@@ -54,6 +54,8 @@ public class StoreService {
         store.setKitSend(storeDto.getKitSend()); // 키트 발송
         store.setSeeAvailable(storeDto.getSeeAvailable()); // 노출 여부
         store.setBusinessType(storeDto.getBusinessType()); // 업종
+        store.setBusinessNumber(storeDto.getBusinessNumber()); // 사업자 번호
+        store.setOpened(storeDto.getOpened()); // 가게 장사 여부
 
         store = storeRepository.save(store);
         return modelMapper.map(store, StoreDto.class);

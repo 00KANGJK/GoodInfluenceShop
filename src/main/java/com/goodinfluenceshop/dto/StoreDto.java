@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class StoreDto {
      int no; // 번호
+     int businessNumber; // 사업자 번호
      String level; // 회원구분
      String storeTitle; // 가게명
      LocalDateTime enrollDate; // 신청일자
@@ -20,5 +21,6 @@ public class StoreDto {
      Boolean stickerSend; // 스티커 발송
      Boolean kitSend; // 키트 발송
      Boolean seeAvailable; // 노출여부
+     Boolean opened; // 영업상태
      String businessType; // 업종
 }

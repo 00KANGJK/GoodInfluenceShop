@@ -19,10 +19,14 @@ public class Store extends StoreBaseEntity{
     private Boolean kitSend; // 키트 발송
     private Boolean seeAvailable; // 노출여부
     private String businessType; // 업종
+    private Boolean opened; // 영업상태
+    private int businessNumber; // 사업자 번호
+
+
     public Store() {
     }
 
-    public Store(String level, String storeTitle, LocalDateTime enrollDate, Boolean depositCheck, Boolean stickerSend, Boolean kitSend, Boolean seeAvailable, String businessType) {
+    public Store(String level, String storeTitle, LocalDateTime enrollDate, Boolean depositCheck, Boolean stickerSend, Boolean kitSend, Boolean seeAvailable, String businessType, int businessNumber, Boolean opened) {
         this.level = level;
         this.storeTitle = storeTitle;
         this.enrollDate = enrollDate;
@@ -31,5 +35,7 @@ public class Store extends StoreBaseEntity{
         this.kitSend = kitSend;
         this.seeAvailable = seeAvailable;
         this.businessType = businessType;
+        this.businessNumber = businessNumber;
+        this.opened = opened;
     }
 }
