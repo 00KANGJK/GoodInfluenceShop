@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DonationDto {
-  private String id;
+  private Long id;
   private int totalDonation;
   private int totalCount;
   private int totalSpend;

@@ -25,27 +25,8 @@ public class DonationRestController {
   }
 
   @GetMapping
-  public ResponseEntity<List<DonationDto>> getAllDonations() {
-    List<DonationDto> donations = donationService.getAllDonations();
+  public ResponseEntity<List<DonationDto>> getRecentDonations() {
+    List<DonationDto> donations = donationService.getRecentDonations();
     return new ResponseEntity<>(donations, HttpStatus.OK);
-  }
-
-  @GetMapping("/{id}")
-  public ResponseEntity<DonationDto> getDonationById(@PathVariable String id) {
-    return donationService.getDonationById(id)
-      .map(donationDto -> new ResponseEntity<>(donationDto, HttpStatus.OK))
-      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-  }
-
-  @PutMapping("/{id}")
-  public ResponseEntity<DonationDto> updateDonation(@PathVariable String id, @RequestBody DonationDto donationDto) {
-    DonationDto updatedDonation = donationService.updateDonation(id, donationDto);
-    return new ResponseEntity<>(updatedDonation, HttpStatus.OK);
-  }
-
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteDonation(@PathVariable String id) {
-    donationService.deleteDonation(id);
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }
