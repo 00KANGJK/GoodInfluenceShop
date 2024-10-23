@@ -97,4 +97,10 @@ public class InquiryDto {
                     .toList();
         }
     }
+
+    @NoArgsConstructor
+    @Getter
+    public static class ReplyInquiryDto {
+        private String answer;
+    }
 }

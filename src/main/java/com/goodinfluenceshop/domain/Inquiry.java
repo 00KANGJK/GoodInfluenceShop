@@ -1,6 +1,7 @@
 package com.goodinfluenceshop.domain;
 
 import com.goodinfluenceshop.domain.enums.InquiryCategory;
+import com.goodinfluenceshop.dto.InquiryDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -45,4 +46,9 @@ public class Inquiry extends BaseEntity{
 
     @Column(nullable = true)
     private LocalDateTime answerDate;
+
+    public void reply(InquiryDto.ReplyInquiryDto dto) {
+        this.answer = dto.getAnswer();
+        this.answerDate = LocalDateTime.now();
+    }
 }

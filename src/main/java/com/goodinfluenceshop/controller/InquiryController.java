@@ -32,4 +32,10 @@ public class InquiryController {
     public ResponseEntity<InquiryDto.ResAdminInquiryDto> getInquiry(@PathVariable Long id) {
         return ResponseEntity.ok(InquiryDto.ResAdminInquiryDto.from(inquiryService.getInquiry(id)));
     }
+
+    @PostMapping("/api/admin/inquiries/{id}/reply")
+    public ResponseEntity<Void> replyInquiry(@PathVariable Long id, @RequestBody InquiryDto.ReplyInquiryDto dto) {
+        inquiryService.replyInquiry(id, dto);
+        return ResponseEntity.ok().build();
+    }
 }
