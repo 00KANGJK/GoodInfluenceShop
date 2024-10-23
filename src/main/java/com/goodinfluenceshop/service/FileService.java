@@ -74,6 +74,9 @@ public class FileService {
     }
 
     public List<FileDto> uploadFiles(List<MultipartFile> file, String baseDirPath) {
+        if (file == null || file.isEmpty()) {
+            return List.of();
+        }
         return file.stream()
                 .map(f -> {
                     try {
