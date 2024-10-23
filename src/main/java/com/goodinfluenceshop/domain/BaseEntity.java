@@ -10,14 +10,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+
 @Getter
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public abstract class BaseEntity {
+
   @Id
-  private String id; // ID
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 전략 설정
+  private Long id; // ID
 
   @Column(nullable = false)
   @Setter
@@ -35,7 +37,6 @@ public abstract class BaseEntity {
 
   @PrePersist
   public void onPrePersist() {
-    this.id = UUID.randomUUID().toString().replace("-", "");
     this.deleted = "N";
   }
 }

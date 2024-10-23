@@ -24,6 +24,7 @@ public class DonationService {
 
   private DonationDto convertToDto(Donation donation) {
     DonationDto donationDto = new DonationDto();
+    donationDto.setId(donation.getId());
     donationDto.setTotalDonation(donation.getTotalDonation());
     donationDto.setTotalCount(donation.getTotalCount());
     donationDto.setTotalSpend(donation.getTotalSpend());
@@ -32,7 +33,9 @@ public class DonationService {
 
   public DonationDto createDonation(DonationDto donationDto) {
     Donation donation = modelMapper.map(donationDto, Donation.class);
+    System.out.println("Before saving: " + donation); // 로그 출력
     donation = donationRepository.save(donation);
+    System.out.println("After saving: " + donation);
     return modelMapper.map(donation, DonationDto.class);
   }
 
