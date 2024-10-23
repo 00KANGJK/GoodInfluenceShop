@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -49,5 +50,29 @@ public class AnnouncementDto {
         private String content;
         private String category;
         private boolean isOpened;
+    }
+
+    @Builder
+    @Getter
+    public static class ResAdminAnnouncementDto {
+        private Long id;
+        private String title;
+        private String content;
+        private String category;
+        private boolean isOpened;
+        private LocalDateTime createdDate;
+
+        public static List<ResAdminAnnouncementDto> from(List<Announcement> announcements) {
+            return announcements.stream()
+                    .map(announcement -> ResAdminAnnouncementDto.builder()
+                            .id(announcement.getId())
+                            .title(announcement.getTitle())
+                            .content(announcement.getContent())
+                            .category(announcement.getCategory().getKor())
+                            .isOpened(announcement.isOpened())
+                            .createdDate(announcement.getCreatedDate())
+                            .build())
+                    .toList();
+        }
     }
 }

@@ -21,4 +21,9 @@ public class AnnouncementRestController {
         announcementService.createAnnouncement(AnnouncementDto.from(addAnnouncementDto, fileService.uploadFiles(file, "announcement/file")));
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/api/admin/announcements")
+    public ResponseEntity<List<AnnouncementDto.ResAdminAnnouncementDto>> getAnnouncements() {
+        return ResponseEntity.ok(AnnouncementDto.ResAdminAnnouncementDto.from(announcementService.getAnnouncements()));
+    }
 }
