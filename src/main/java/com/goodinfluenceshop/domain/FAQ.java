@@ -22,7 +22,7 @@ public class FAQ extends BaseEntity {
     private String content;
 
     @Column(nullable = false)
-    private boolean isOpened;
+    private Boolean isOpened;
 
     @OneToMany(mappedBy = "faq",
             fetch = FetchType.LAZY,
@@ -33,7 +33,7 @@ public class FAQ extends BaseEntity {
     public void update(FAQDto dto) {
         this.title = dto.getTitle();
         this.content = dto.getContent();
-        this.isOpened = dto.isOpened();
+        this.isOpened = dto.getIsOpened();
         if(!dto.getFaqFiles().isEmpty()) {
             this.faqFiles.clear();
             this.faqFiles.addAll(FAQFileDto.listToEntity(dto.getFaqFiles(), this));

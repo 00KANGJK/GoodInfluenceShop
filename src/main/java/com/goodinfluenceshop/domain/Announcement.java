@@ -23,7 +23,7 @@ public class Announcement extends BaseEntity {
     private String content;
 
     @Column(nullable = false)
-    private boolean isOpened;
+    private Boolean isOpened;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -38,7 +38,7 @@ public class Announcement extends BaseEntity {
     public void update(AnnouncementDto dto) {
         this.title = dto.getTitle();
         this.content = dto.getContent();
-        this.isOpened = dto.isOpened();
+        this.isOpened = dto.getIsOpened();
         this.category = AnnouncementCategory.from(dto.getCategory());
         if(!dto.getAnnouncementFiles().isEmpty()) {
             this.announcementFiles.clear();

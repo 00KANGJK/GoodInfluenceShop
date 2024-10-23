@@ -15,14 +15,14 @@ public class FAQDto {
     private Long id;
     private String title;
     private String content;
-    private boolean isOpened;
+    private Boolean isOpened;
     private List<FAQFileDto> faqFiles;
 
     public static FAQDto from(AddFAQDto addFAQDto, List<FileDto> fileDtos) {
         return FAQDto.builder()
                 .title(addFAQDto.getTitle())
                 .content(addFAQDto.getContent())
-                .isOpened(addFAQDto.isOpened())
+                .isOpened(addFAQDto.getIsOpened())
                 .faqFiles(FAQFileDto.listFromFileDtos(fileDtos))
                 .build();
     }
@@ -31,7 +31,7 @@ public class FAQDto {
         return FAQDto.builder()
                 .title(updateFAQDto.getTitle())
                 .content(updateFAQDto.getContent())
-                .isOpened(updateFAQDto.isOpened())
+                .isOpened(updateFAQDto.getIsOpened())
                 .faqFiles(FAQFileDto.listFromFileDtos(fileDtos))
                 .build();
     }
@@ -52,7 +52,7 @@ public class FAQDto {
     public static class AddFAQDto {
         private String title;
         private String content;
-        private boolean isOpened;
+        private Boolean isOpened;
     }
 
     @NoArgsConstructor
@@ -61,7 +61,7 @@ public class FAQDto {
     public static class UpdateFAQDto {
         private String title;
         private String content;
-        private boolean isOpened;
+        private Boolean isOpened;
     }
 
     @Builder
@@ -70,7 +70,7 @@ public class FAQDto {
         private Long id;
         private String title;
         private String content;
-        private boolean isOpened;
+        private Boolean isOpened;
         private List<FAQFileDto> faqFiles;
 
         public static ResAdminFAQDto from(FAQ faq) {
@@ -78,7 +78,7 @@ public class FAQDto {
                     .id(faq.getId())
                     .title(faq.getTitle())
                     .content(faq.getContent())
-                    .isOpened(faq.isOpened())
+                    .isOpened(faq.getIsOpened())
                     .faqFiles(FAQFileDto.listFromFAQFiles(faq.getFaqFiles()))
                     .build();
         }
@@ -89,7 +89,7 @@ public class FAQDto {
                             .id(faq.getId())
                             .title(faq.getTitle())
                             .content(faq.getContent())
-                            .isOpened(faq.isOpened())
+                            .isOpened(faq.getIsOpened())
                             .build())
                     .toList();
         }

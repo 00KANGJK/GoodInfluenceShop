@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import com.goodinfluenceshop.dto.InquiryDto;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class InquiryController {
@@ -21,4 +23,13 @@ public class InquiryController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/api/admin/inquiries")
+    public ResponseEntity<List<InquiryDto.ResAdminInquiryDto>> getInquiries() {
+        return ResponseEntity.ok(InquiryDto.ResAdminInquiryDto.from(inquiryService.getInquiries()));
+    }
+
+    @GetMapping("/api/admin/inquiries/{id}")
+    public ResponseEntity<InquiryDto.ResAdminInquiryDto> getInquiry(@PathVariable Long id) {
+        return ResponseEntity.ok(InquiryDto.ResAdminInquiryDto.from(inquiryService.getInquiry(id)));
+    }
 }

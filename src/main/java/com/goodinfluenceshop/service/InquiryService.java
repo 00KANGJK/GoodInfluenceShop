@@ -1,10 +1,13 @@
 package com.goodinfluenceshop.service;
 
+import com.goodinfluenceshop.domain.Inquiry;
 import com.goodinfluenceshop.dto.InquiryDto;
 import com.goodinfluenceshop.repository.InquiryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -14,5 +17,13 @@ public class InquiryService {
 
     public void createInquiry(InquiryDto dto) {
         inquiryRepository.save(dto.toEntity());
+    }
+
+    public List<Inquiry> getInquiries() {
+        return inquiryRepository.findAll();
+    }
+
+    public Inquiry getInquiry(Long id) {
+        return inquiryRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
     }
 }

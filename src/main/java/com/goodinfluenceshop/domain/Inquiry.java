@@ -23,7 +23,7 @@ public class Inquiry extends BaseEntity{
     private Integer password;
 
     @Column(nullable = false)
-    private boolean isSecret;
+    private Boolean isSecret;
 
     @Column(nullable = false)
     private String title;
@@ -38,7 +38,7 @@ public class Inquiry extends BaseEntity{
     private String email;
 
     @Column(nullable = true)
-    private boolean emailChecked;
+    private Boolean emailChecked;
 
     @Column(nullable = true)
     private String answer;

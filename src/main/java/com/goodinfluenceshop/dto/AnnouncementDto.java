@@ -18,7 +18,7 @@ public class AnnouncementDto {
     private String title;
     private String content;
     private String category;
-    private boolean isOpened;
+    private Boolean isOpened;
     private List<AnnouncementFileDto> announcementFiles;
 
     public static AnnouncementDto from(AddAnnouncementDto addAnnouncementDto, List<FileDto> fileDtos) {
@@ -26,7 +26,7 @@ public class AnnouncementDto {
                 .title(addAnnouncementDto.getTitle())
                 .content(addAnnouncementDto.getContent())
                 .category(addAnnouncementDto.getCategory())
-                .isOpened(addAnnouncementDto.isOpened())
+                .isOpened(addAnnouncementDto.getIsOpened())
                 .announcementFiles(AnnouncementFileDto.listFromFileDtos(fileDtos))
                 .build();
     }
@@ -36,7 +36,7 @@ public class AnnouncementDto {
                 .title(updateAnnouncementDto.getTitle())
                 .content(updateAnnouncementDto.getContent())
                 .category(updateAnnouncementDto.getCategory())
-                .isOpened(updateAnnouncementDto.isOpened())
+                .isOpened(updateAnnouncementDto.getIsOpened())
                 .announcementFiles(AnnouncementFileDto.listFromFileDtos(fileDtos))
                 .build();
     }
@@ -59,7 +59,7 @@ public class AnnouncementDto {
         private String title;
         private String content;
         private String category;
-        private boolean isOpened;
+        private Boolean isOpened;
     }
 
     @Builder
@@ -69,7 +69,7 @@ public class AnnouncementDto {
         private String title;
         private String content;
         private String category;
-        private boolean isOpened;
+        private Boolean isOpened;
         private LocalDateTime createdDate;
         private List<AnnouncementFileDto> announcementFiles;
 
@@ -80,7 +80,7 @@ public class AnnouncementDto {
                             .title(announcement.getTitle())
                             .content(announcement.getContent())
                             .category(announcement.getCategory().getKor())
-                            .isOpened(announcement.isOpened())
+                            .isOpened(announcement.getIsOpened())
                             .createdDate(announcement.getCreatedDate())
                             .build())
                     .toList();
@@ -92,7 +92,7 @@ public class AnnouncementDto {
                     .title(announcement.getTitle())
                     .content(announcement.getContent())
                     .category(announcement.getCategory().getKor())
-                    .isOpened(announcement.isOpened())
+                    .isOpened(announcement.getIsOpened())
                     .createdDate(announcement.getCreatedDate())
                     .announcementFiles(AnnouncementFileDto.listFromAnnouncementFiles(announcement.getAnnouncementFiles()))
                     .build();
@@ -106,6 +106,6 @@ public class AnnouncementDto {
         private String title;
         private String content;
         private String category;
-        private boolean isOpened;
+        private Boolean isOpened;
     }
 }
