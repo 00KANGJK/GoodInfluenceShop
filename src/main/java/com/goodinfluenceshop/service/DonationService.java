@@ -46,7 +46,7 @@ public class DonationService {
       .collect(Collectors.toList());
   }
 
-  public void deleteDonation(String id) {
+  public void deleteDonation(Long id) {
     Donation donation = donationRepository.findById(id)
       .orElseThrow(() -> new EntityNotFoundException("Donation not found"));
     donation.setDeleted("Y");
