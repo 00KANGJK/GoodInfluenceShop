@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: GoodInfluenceShop
+  config:
+    import: classpath:s3.yml
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+
