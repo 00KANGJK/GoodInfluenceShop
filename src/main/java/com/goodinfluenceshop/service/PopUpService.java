@@ -4,23 +4,20 @@ import com.goodinfluenceshop.repository.PopUpRepository;
 import com.goodinfluenceshop.dto.PopUpDto;
 import com.goodinfluenceshop.domain.PopUp;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PopUpService {
   private final PopUpRepository popUpRepository;
   private final ModelMapper modelMapper;
-
-  @Autowired
-  public PopUpService(PopUpRepository popUpRepository, ModelMapper modelMapper) {
-    this.popUpRepository = popUpRepository;
-    this.modelMapper = modelMapper;
-  }
 
   private PopUpDto convertToDto(PopUp popUp) {
     return modelMapper.map(popUp, PopUpDto.class);
@@ -65,5 +62,20 @@ public class PopUpService {
     PopUp popUp = popUpRepository.findById(id)
       .orElseThrow(() -> new EntityNotFoundException("PopUp not found"));
     popUpRepository.delete(popUp);
+  }
+
+  public List<PopUpDto> getVisiblePopUps() {
+    LocalDateTime now = LocalDateTime.now();
+    List<PopUp> allPopUps = popUpRepository.findAll();
+
+    List<PopUp> visiblePopUps = allPopUps.stream()
+      .filter(popUp -> popUp.isVisible() &&
+        (popUp.getStartDate() == null || popUp.getStartDate().isBefore(now)) &&
+        (popUp.getEndDate() == null || popUp.getEndDate().isAfter(now)))
+      .toList();
+
+    return visiblePopUps.stream()
+      .map(this::convertToDto)
+      .collect(Collectors.toList());
   }
 }
