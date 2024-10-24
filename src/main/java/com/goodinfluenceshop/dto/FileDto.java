@@ -2,10 +2,30 @@ package com.goodinfluenceshop.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
 public class FileDto {
     private String filePath;
     private String originalFileName;
+
+    @Getter
+    @Builder
+    public static class ResImageUploadDto {
+        private String url;
+
+        public static ResImageUploadDto from(String url) {
+            return ResImageUploadDto.builder()
+                    .url(url)
+                    .build();
+        }
+    }
+
+    @NoArgsConstructor
+    @Getter
+    public static class DownloadFileDto {
+        private String filePath;
+        private String originalFileName;
+    }
 }

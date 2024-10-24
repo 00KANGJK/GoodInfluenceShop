@@ -2,11 +2,14 @@ package com.goodinfluenceshop.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.goodinfluenceshop.dto.FileDto;
 import com.goodinfluenceshop.exception.FileUploadException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -86,5 +89,10 @@ public class FileService {
                     }
                 })
                 .toList();
+    }
+
+    public InputStreamResource download(String filePath) {
+        S3Object s3Object = amazonS3Client.getObject(new GetObjectRequest(bucket, filePath));
+        return new InputStreamResource(s3Object.getObjectContent());
     }
 }
