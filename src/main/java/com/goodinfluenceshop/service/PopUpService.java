@@ -4,6 +4,7 @@ import com.goodinfluenceshop.repository.PopUpRepository;
 import com.goodinfluenceshop.dto.PopUpDto;
 import com.goodinfluenceshop.domain.PopUp;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PopUpService {
   private final PopUpRepository popUpRepository;
@@ -23,45 +25,23 @@ public class PopUpService {
     return modelMapper.map(popUp, PopUpDto.class);
   }
 
-  public PopUpDto createPopUp(PopUpDto popUpDto) {
-    PopUp popUp = modelMapper.map(popUpDto, PopUp.class);
-    popUp = popUpRepository.save(popUp);
-    return convertToDto(popUp);
+  public void createPopUp(PopUpDto popUpDto) {
+    popUpRepository.save(popUpDto.toEntity());
   }
 
-  public List<PopUpDto> getAllPopUps() {
-    List<PopUp> popUps = popUpRepository.findAll();
-    return popUps.stream()
-      .map(this::convertToDto)
-      .collect(Collectors.toList());
+  public List<PopUp> getAllPopUps() {
+    return popUpRepository.findAll();
   }
 
-  public PopUpDto getPopUpById(Long id) {
+  public PopUp getPopUpById(Long id) {
+    return popUpRepository.findById(id)
+      .orElseThrow(() -> new IllegalArgumentException("해당 PopUp이 존재하지 않습니다."));
+  }
+
+  public void updatePopUp(Long id, PopUpDto popUpDto) {
     PopUp popUp = popUpRepository.findById(id)
-      .orElseThrow(() -> new EntityNotFoundException("PopUp not found"));
-    return convertToDto(popUp);
-  }
-
-  public PopUpDto updatePopUp(Long id, PopUpDto popUpDto) {
-    PopUp popUp = popUpRepository.findById(id)
-      .orElseThrow(() -> new EntityNotFoundException("PopUp not found"));
-
-    // 필드 업데이트
-    popUp.setTitle(popUpDto.getTitle());
-    popUp.setContent(popUpDto.getContent());
-    popUp.setImageUrl(popUpDto.getImageUrl());
-    popUp.setVisible(popUpDto.isVisible());
-    popUp.setStartDate(popUpDto.getStartDate());
-    popUp.setEndDate(popUpDto.getEndDate());
-
-    popUp = popUpRepository.save(popUp);
-    return convertToDto(popUp);
-  }
-
-  public void deletePopUp(Long id) {
-    PopUp popUp = popUpRepository.findById(id)
-      .orElseThrow(() -> new EntityNotFoundException("PopUp not found"));
-    popUpRepository.delete(popUp);
+      .orElseThrow(() -> new IllegalArgumentException("해당 PopUp이 존재하지 않습니다."));
+    popUp.update(popUpDto);
   }
 
   public List<PopUpDto> getVisiblePopUps() {

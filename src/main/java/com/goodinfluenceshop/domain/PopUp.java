@@ -1,21 +1,23 @@
 package com.goodinfluenceshop.domain;
 
+import com.goodinfluenceshop.dto.PopUpDto;
+import com.goodinfluenceshop.dto.PopUpFileDto;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Getter
-@Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Builder
+@Setter
 public class PopUp extends BaseEntity {
 
   private String title; // 제목
   private String content; // 내용
-
-  @Column(nullable = false)
-  private String imageUrl; // AWS S3 이미지 URL
 
   @Column(nullable = false)
   private boolean isVisible; // 팝업 표시 여부
@@ -26,15 +28,21 @@ public class PopUp extends BaseEntity {
   @Column(name = "end_date")
   private LocalDateTime endDate; // 팝업 공개 종료일
 
-  public PopUp() {
-  }
+  @OneToMany(mappedBy = "popUp",
+          fetch = FetchType.LAZY,
+          cascade = CascadeType.ALL,
+          orphanRemoval = true)
+  private List<PopUpFile> popUpFiles; // 팝업 파일 목록
 
-  public PopUp(String title, String content, String imageUrl, boolean isVisible, LocalDateTime startDate, LocalDateTime endDate) {
-    this.title = title;
-    this.content = content;
-    this.imageUrl = imageUrl; // S3 URL로 설정
-    this.isVisible = isVisible;
-    this.startDate = startDate;
-    this.endDate = endDate;
+  public void update(PopUpDto dto) {
+    this.title = dto.getTitle();
+    this.content = dto.getContent();
+    this.isVisible = dto.isVisible();
+    this.startDate = dto.getStartDate();
+    this.endDate = dto.getEndDate();
+    if(!dto.getPopUpFiles().isEmpty()) {
+      this.popUpFiles.clear();
+      this.popUpFiles.addAll(PopUpFileDto.listToEntity(dto.getPopUpFiles(), this));
+    }
   }
 }
