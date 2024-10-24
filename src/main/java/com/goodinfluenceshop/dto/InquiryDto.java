@@ -64,6 +64,7 @@ public class InquiryDto {
 
     @Getter
     @Builder
+    @Setter
     public static class ResAdminInquiryDto {
         private Long id;
         private String category;
