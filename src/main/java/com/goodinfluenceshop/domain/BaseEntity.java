@@ -28,12 +28,12 @@ public abstract class BaseEntity {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   @CreatedDate
   @Column(nullable = false, updatable = false)
-  protected LocalDateTime created_date; // 생성일시
+  protected LocalDateTime createdDate; // 생성일시
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   @LastModifiedDate
   @Column(nullable = false)
-  protected LocalDateTime modify_date; // 수정일시
+  protected LocalDateTime modifyDate; // 수정일시
 
   @PrePersist
   public void onPrePersist() {
