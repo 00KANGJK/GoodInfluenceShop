@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PopUpRepository extends JpaRepository<PopUp, Long> {
-  @Query("SELECT p FROM PopUp p WHERE p.isVisible = true " +
-    "AND (p.startDate IS NULL OR p.startDate <= :currentDate) " +
+  @Query("SELECT p FROM PopUp p WHERE " +
+    "(p.isVisible = true OR (p.startDate IS NOT NULL AND p.startDate <= :currentDate)) " +
     "AND (p.endDate IS NULL OR p.endDate >= :currentDate)")
   List<PopUp> findVisiblePopUps(@Param("currentDate") LocalDateTime currentDate);
 }
