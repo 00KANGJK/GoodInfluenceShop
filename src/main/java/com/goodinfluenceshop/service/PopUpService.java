@@ -19,11 +19,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PopUpService {
   private final PopUpRepository popUpRepository;
-  private final ModelMapper modelMapper;
-
-  private PopUpDto convertToDto(PopUp popUp) {
-    return modelMapper.map(popUp, PopUpDto.class);
-  }
 
   public void createPopUp(PopUpDto popUpDto) {
     popUpRepository.save(popUpDto.toEntity());
@@ -44,18 +39,8 @@ public class PopUpService {
     popUp.update(popUpDto);
   }
 
-  public List<PopUpDto> getVisiblePopUps() {
-    LocalDateTime now = LocalDateTime.now();
-    List<PopUp> allPopUps = popUpRepository.findAll();
-
-    List<PopUp> visiblePopUps = allPopUps.stream()
-      .filter(popUp -> popUp.isVisible() &&
-        (popUp.getStartDate() == null || popUp.getStartDate().isBefore(now)) &&
-        (popUp.getEndDate() == null || popUp.getEndDate().isAfter(now)))
-      .toList();
-
-    return visiblePopUps.stream()
-      .map(this::convertToDto)
-      .collect(Collectors.toList());
+  public List<PopUp> getVisiblePopUps() {
+    LocalDateTime currentDate = LocalDateTime.now();
+    return popUpRepository.findVisiblePopUps(currentDate);
   }
 }

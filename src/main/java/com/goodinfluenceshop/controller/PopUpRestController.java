@@ -1,5 +1,6 @@
 package com.goodinfluenceshop.controller;
 
+import com.goodinfluenceshop.domain.PopUp;
 import com.goodinfluenceshop.dto.PopUpDto;
 import com.goodinfluenceshop.service.FileService;
 import com.goodinfluenceshop.service.PopUpService;
@@ -31,9 +32,8 @@ public class PopUpRestController {
   }
 
   @GetMapping("/all/popups/visible")
-  public ResponseEntity<List<PopUpDto>> getVisiblePopUps() {
-    List<PopUpDto> visiblePopUps = popUpService.getVisiblePopUps();
-    return new ResponseEntity<>(visiblePopUps, HttpStatus.OK);
+  public ResponseEntity<List<PopUpDto.ResAdminPopUpDto>> getVisiblePopUps() {
+    return ResponseEntity.ok(PopUpDto.ResAdminPopUpDto.from(popUpService.getVisiblePopUps()));
   }
 
   @GetMapping("/admin/popups/{id}")
@@ -42,7 +42,7 @@ public class PopUpRestController {
   }
 
   @PatchMapping("/admin/popups/{id}")
-  public ResponseEntity<PopUpDto> updatePopUp(@PathVariable Long id,@ModelAttribute PopUpDto.UpdatePopUpDto updatePopUpDto, @RequestParam(value = "file", required = false) List<MultipartFile> files) {
+  public ResponseEntity<Void> updatePopUp(@PathVariable Long id,@ModelAttribute PopUpDto.UpdatePopUpDto updatePopUpDto, @RequestParam(value = "file", required = false) List<MultipartFile> files) {
     popUpService.updatePopUp(id, PopUpDto.from(updatePopUpDto, fileService.uploadFiles(files, "popup/file")));
     return ResponseEntity.ok().build();
   }

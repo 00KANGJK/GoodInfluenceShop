@@ -39,7 +39,6 @@ public class PopUpDto {
       .build();
   }
 
-
   public PopUp toEntity() {
     PopUp popUp = PopUp.builder()
       .title(title)
@@ -81,8 +80,21 @@ public class PopUpDto {
     private String title;
     private String content;
     private Boolean isVisible;
-    private LocalDateTime createdDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private List<PopUpFileDto> popUpFiles;
+
+    public static ResAdminPopUpDto from(PopUp popUp) {
+      return ResAdminPopUpDto.builder()
+        .id(popUp.getId())
+        .title(popUp.getTitle())
+        .content(popUp.getContent())
+        .isVisible(popUp.isVisible())
+        .startDate(popUp.getStartDate())
+        .endDate(popUp.getEndDate())
+        .popUpFiles(PopUpFileDto.listFromPopUpFiles(popUp.getPopUpFiles()))
+        .build();
+    }
 
     public static List<ResAdminPopUpDto> from(List<PopUp> popUps) {
       return popUps.stream()
@@ -91,20 +103,11 @@ public class PopUpDto {
           .title(popUp.getTitle())
           .content(popUp.getContent())
           .isVisible(popUp.isVisible())
-          .createdDate(popUp.getCreatedDate())
+          .startDate(popUp.getStartDate())
+          .endDate(popUp.getEndDate())
+          .popUpFiles(PopUpFileDto.listFromPopUpFiles(popUp.getPopUpFiles()))
           .build())
         .toList();
-    }
-
-    public static ResAdminPopUpDto from(PopUp popUp) {
-      return ResAdminPopUpDto.builder()
-        .id(popUp.getId())
-        .title(popUp.getTitle())
-        .content(popUp.getContent())
-        .isVisible(popUp.isVisible())
-        .createdDate(popUp.getCreatedDate())
-        .popUpFiles(PopUpFileDto.listFromPopUpFiles(popUp.getPopUpFiles()))
-        .build();
     }
   }
 }
