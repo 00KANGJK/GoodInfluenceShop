@@ -2,29 +2,25 @@ package com.goodinfluenceshop.controller;
 
 import com.goodinfluenceshop.dto.DonationDto;
 import com.goodinfluenceshop.service.DonationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
-@RequestMapping("/api/donations")
+@RequiredArgsConstructor
+@RequestMapping("/api")
 public class DonationRestController {
   private final DonationService donationService;
 
-  @Autowired
-  public DonationRestController(DonationService donationService) {
-    this.donationService = donationService;
-  }
-
-  @PostMapping
+  @PostMapping("/admin/donations")
   public ResponseEntity<DonationDto> createDonation(@RequestBody DonationDto donationDto) {
     DonationDto createdDonation = donationService.createDonation(donationDto);
     return new ResponseEntity<>(createdDonation, HttpStatus.CREATED);
   }
 
-  @GetMapping
+  @GetMapping("/all/donations")
   public ResponseEntity<List<DonationDto>> getRecentDonations() {
     List<DonationDto> donations = donationService.getRecentDonations();
     return new ResponseEntity<>(donations, HttpStatus.OK);
