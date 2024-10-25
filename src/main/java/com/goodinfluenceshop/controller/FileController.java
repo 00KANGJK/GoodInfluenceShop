@@ -21,12 +21,12 @@ import java.nio.charset.StandardCharsets;
 public class FileController {
     private final FileService fileService;
 
-    @PostMapping("/api/image")
+    @PostMapping("/api/all/image")
     public ResponseEntity<FileDto.ResImageUploadDto> uploadImage(MultipartFile image) throws FileUploadException {
         return ResponseEntity.ok(FileDto.ResImageUploadDto.from(fileService.getFileUrl(fileService.upload(image, "image/").getFilePath())));
     }
 
-    @PostMapping("/api/file/download")
+    @PostMapping("/api/all/file/download")
     public ResponseEntity<InputStreamResource> downloadFile(@RequestBody FileDto.DownloadFileDto dto) {
         String encodedFileName = URLEncoder.encode(dto.getOriginalFileName(), StandardCharsets.UTF_8);
         return ResponseEntity.ok()

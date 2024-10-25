@@ -1,0 +1,7 @@
+aws:
+  credentials:
+    accessKey: AKIA45Y2R2K4JO6PYG5O
+    secretKey: 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
+  s3:
+    bucket: good-influence-shop-3
+    region: ap-northeast-2

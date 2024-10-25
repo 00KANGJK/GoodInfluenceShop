@@ -17,7 +17,7 @@ public class InquiryController {
     private final InquiryService inquiryService;
     private final FileService fileService;
 
-    @PostMapping("/api/inquiries")
+    @PostMapping("/api/all/inquiries")
     public ResponseEntity<Void> createInquiry(@ModelAttribute InquiryDto.AddInquiryDto dto, @RequestParam(value = "image", required = false) MultipartFile image) throws FileUploadException {
         inquiryService.createInquiry(InquiryDto.from(dto, fileService.upload(image, "inquiry/image/")));
         return ResponseEntity.ok().build();
@@ -25,12 +25,15 @@ public class InquiryController {
 
     @GetMapping("/api/admin/inquiries")
     public ResponseEntity<List<InquiryDto.ResAdminInquiryDto>> getInquiries() {
-        return ResponseEntity.ok(InquiryDto.ResAdminInquiryDto.from(inquiryService.getInquiries()));
+        List<InquiryDto.ResAdminInquiryDto> inquiries = InquiryDto.ResAdminInquiryDto.from(inquiryService.getInquiries());
+        return ResponseEntity.ok(inquiries);
     }
 
     @GetMapping("/api/admin/inquiries/{id}")
     public ResponseEntity<InquiryDto.ResAdminInquiryDto> getInquiry(@PathVariable Long id) {
-        return ResponseEntity.ok(InquiryDto.ResAdminInquiryDto.from(inquiryService.getInquiry(id)));
+        InquiryDto.ResAdminInquiryDto inquiry = InquiryDto.ResAdminInquiryDto.from(inquiryService.getInquiry(id));
+        inquiry.setImage(fileService.getFileUrl(inquiry.getImage()));
+        return ResponseEntity.ok(inquiry);
     }
 
     @PostMapping("/api/admin/inquiries/{id}/reply")

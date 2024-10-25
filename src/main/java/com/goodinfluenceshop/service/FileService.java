@@ -31,7 +31,7 @@ public class FileService {
 
     public FileDto upload(MultipartFile multipartFile, String baseDirPath) throws FileUploadException {
         if (multipartFile == null || multipartFile.isEmpty()) {
-            return null;
+            return new FileDto();
         }
         validFileSize(multipartFile);
         String fileName = getUuidFileName(multipartFile.getOriginalFilename());
