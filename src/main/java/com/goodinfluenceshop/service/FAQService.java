@@ -40,4 +40,8 @@ public class FAQService {
     public List<FAQ> getOpenedFAQs() {
         return faqRepository.findOpenedFAQs();
     }
+
+    public FAQ getOpenedFAQ(Long id) {
+        return faqRepository.findOpenedFAQById(id).orElseThrow(() -> new IllegalArgumentException("해당 FAQ가 존재하지 않습니다."));
+    }
 }

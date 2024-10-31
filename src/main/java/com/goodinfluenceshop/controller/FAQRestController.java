@@ -43,4 +43,14 @@ public class FAQRestController {
         faqService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/api/all/faqs")
+    public ResponseEntity<List<FAQDto.ResFAQDto>> getOpenedFAQs() {
+        return ResponseEntity.ok(FAQDto.ResFAQDto.from(faqService.getOpenedFAQs()));
+    }
+
+    @GetMapping("/api/all/faqs/{id}")
+    public ResponseEntity<FAQDto.ResFAQDto> getOpenedFAQ(@PathVariable Long id) {
+        return ResponseEntity.ok(FAQDto.ResFAQDto.from(faqService.getOpenedFAQ(id)));
+    }
 }

@@ -16,4 +16,7 @@ public interface FAQRepository extends JpaRepository<FAQ, Long> {
 
     @Query("SELECT f FROM FAQ f WHERE f.deleted = 'N' AND f.isOpened ORDER BY f.id DESC")// 삭제되지 않은 FAQ 중 공개된 것만 조회
     List<FAQ> findOpenedFAQs();
+
+    @Query("SELECT f FROM FAQ f WHERE f.deleted = 'N' AND f.isOpened AND f.id = :id") // 삭제되지 않은 FAQ 중 공개된 특정 FAQ 조회
+    Optional<FAQ> findOpenedFAQById(Long id);
 }
