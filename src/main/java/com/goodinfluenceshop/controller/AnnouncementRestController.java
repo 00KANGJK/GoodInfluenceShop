@@ -43,4 +43,14 @@ public class AnnouncementRestController {
         announcementService.deleteAnnouncement(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/api/all/announcements")
+    public ResponseEntity<List<AnnouncementDto.ResAnnouncementDto>> getOpenedAnnouncements() {
+        return ResponseEntity.ok(AnnouncementDto.ResAnnouncementDto.from(announcementService.getOpenedAnnouncements()));
+    }
+
+    @GetMapping("/api/all/announcements/{id}")
+    public ResponseEntity<AnnouncementDto.ResAnnouncementDto> getOpenedAnnouncement(@PathVariable Long id) {
+        return ResponseEntity.ok(AnnouncementDto.ResAnnouncementDto.from(announcementService.getOpenedAnnouncement(id)));
+    }
 }

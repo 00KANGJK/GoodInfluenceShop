@@ -108,4 +108,40 @@ public class AnnouncementDto {
         private String category;
         private Boolean isOpened;
     }
+
+    @Builder
+    @Getter
+    public static class ResAnnouncementDto {
+        private Long id;
+        private String title;
+        private String content;
+        private String category;
+        private Boolean isOpened;
+        private LocalDateTime createdDate;
+        private List<AnnouncementFileDto> announcementFiles;
+
+        public static List<ResAnnouncementDto> from(List<Announcement> announcements) {
+            return announcements.stream()
+                    .map(announcement -> ResAnnouncementDto.builder()
+                            .id(announcement.getId())
+                            .title(announcement.getTitle())
+                            .category(announcement.getCategory().getKor())
+                            .isOpened(announcement.getIsOpened())
+                            .createdDate(announcement.getCreatedDate())
+                            .build())
+                    .toList();
+        }
+
+        public static ResAnnouncementDto from(Announcement announcement) {
+            return ResAnnouncementDto.builder()
+                    .id(announcement.getId())
+                    .title(announcement.getTitle())
+                    .content(announcement.getContent())
+                    .category(announcement.getCategory().getKor())
+                    .isOpened(announcement.getIsOpened())
+                    .createdDate(announcement.getCreatedDate())
+                    .announcementFiles(AnnouncementFileDto.listFromAnnouncementFiles(announcement.getAnnouncementFiles()))
+                    .build();
+        }
+    }
 }
