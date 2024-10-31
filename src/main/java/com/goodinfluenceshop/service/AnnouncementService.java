@@ -21,15 +21,28 @@ public class AnnouncementService {
     }
 
     public List<Announcement> getAnnouncements() {
-        return announcementRepository.findAll();
+        return announcementRepository.findAllActiveAnnouncements();
     }
 
     public Announcement getAnnouncement(Long id) {
-        return announcementRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 존재하지 않습니다."));
+        return announcementRepository.findAnnouncementById(id).orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 존재하지 않습니다."));
     }
 
     public void updateAnnouncement(Long id, AnnouncementDto dto) {
-        Announcement announcement = announcementRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 존재하지 않습니다."));
+        Announcement announcement = announcementRepository.findAnnouncementById(id).orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 존재하지 않습니다."));
         announcement.update(dto);
+    }
+
+    public void deleteAnnouncement(Long id) {
+        Announcement announcement = announcementRepository.findAnnouncementById(id).orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 존재하지 않습니다."));
+        announcement.delete();
+    }
+
+    public List<Announcement> getOpenedAnnouncements() {
+        return announcementRepository.findOpenedAnnouncements();
+    }
+
+    public Announcement getOpenedAnnouncement(Long id) {
+        return announcementRepository.findOpenedAnnouncementById(id).orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 존재하지 않습니다."));
     }
 }

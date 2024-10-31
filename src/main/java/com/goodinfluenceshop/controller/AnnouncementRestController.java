@@ -37,4 +37,20 @@ public class AnnouncementRestController {
         announcementService.updateAnnouncement(id, AnnouncementDto.from(updateAnnouncementDto, fileService.uploadFiles(file, "announcement/file")));
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/api/admin/announcements/{id}")
+    public ResponseEntity<Void> deleteAnnouncement(@PathVariable Long id) {
+        announcementService.deleteAnnouncement(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/api/all/announcements")
+    public ResponseEntity<List<AnnouncementDto.ResAnnouncementDto>> getOpenedAnnouncements() {
+        return ResponseEntity.ok(AnnouncementDto.ResAnnouncementDto.from(announcementService.getOpenedAnnouncements()));
+    }
+
+    @GetMapping("/api/all/announcements/{id}")
+    public ResponseEntity<AnnouncementDto.ResAnnouncementDto> getOpenedAnnouncement(@PathVariable Long id) {
+        return ResponseEntity.ok(AnnouncementDto.ResAnnouncementDto.from(announcementService.getOpenedAnnouncement(id)));
+    }
 }

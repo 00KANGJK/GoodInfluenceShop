@@ -20,15 +20,30 @@ public class InquiryService {
     }
 
     public List<Inquiry> getInquiries() {
-        return inquiryRepository.findAll();
+        return inquiryRepository.findAllActiveInquiries();
     }
 
     public Inquiry getInquiry(Long id) {
-        return inquiryRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
+        return inquiryRepository.findInquiryById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
     }
 
     public void replyInquiry(Long id, InquiryDto.ReplyInquiryDto dto) {
-        Inquiry inquiry = inquiryRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
+        Inquiry inquiry = inquiryRepository.findInquiryById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
         inquiry.reply(dto);
+    }
+
+    public void deleteInquiry(Long id) {
+        Inquiry inquiry = inquiryRepository.findInquiryById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
+        inquiry.delete();
+    }
+
+    public Inquiry getPasswordedInquiry(Long id, String password) {
+        Inquiry inquiry = inquiryRepository.findInquiryById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
+        System.out.println(inquiry.getPassword());
+        System.out.println(password);
+        if (!inquiry.getPassword().equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        return inquiry;
     }
 }
