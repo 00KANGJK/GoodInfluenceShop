@@ -37,4 +37,10 @@ public class AnnouncementRestController {
         announcementService.updateAnnouncement(id, AnnouncementDto.from(updateAnnouncementDto, fileService.uploadFiles(file, "announcement/file")));
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/api/admin/announcements/{id}")
+    public ResponseEntity<Void> deleteAnnouncement(@PathVariable Long id) {
+        announcementService.deleteAnnouncement(id);
+        return ResponseEntity.ok().build();
+    }
 }

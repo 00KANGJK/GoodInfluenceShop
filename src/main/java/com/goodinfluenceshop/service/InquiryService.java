@@ -20,15 +20,15 @@ public class InquiryService {
     }
 
     public List<Inquiry> getInquiries() {
-        return inquiryRepository.findAll();
+        return inquiryRepository.findAllActiveInquiries();
     }
 
     public Inquiry getInquiry(Long id) {
-        return inquiryRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
+        return inquiryRepository.findInquiryById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
     }
 
     public void replyInquiry(Long id, InquiryDto.ReplyInquiryDto dto) {
-        Inquiry inquiry = inquiryRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
+        Inquiry inquiry = inquiryRepository.findInquiryById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
         inquiry.reply(dto);
     }
 }

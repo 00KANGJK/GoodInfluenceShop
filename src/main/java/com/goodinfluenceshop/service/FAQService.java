@@ -20,15 +20,15 @@ public class FAQService {
     }
 
     public List<FAQ> findAll() {
-        return faqRepository.findAll();
+        return faqRepository.findAllActiveFAQs();
     }
 
     public FAQ findById(Long id) {
-        return faqRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 FAQ가 존재하지 않습니다."));
+        return faqRepository.findFAQById(id).orElseThrow(() -> new IllegalArgumentException("해당 FAQ가 존재하지 않습니다."));
     }
 
     public void update(Long id, FAQDto faqDto) {
-        FAQ faq = faqRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 FAQ가 존재하지 않습니다."));
+        FAQ faq = faqRepository.findFAQById(id).orElseThrow(() -> new IllegalArgumentException("해당 FAQ가 존재하지 않습니다."));
         faq.update(faqDto);
     }
 }
