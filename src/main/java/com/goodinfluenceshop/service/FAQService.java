@@ -31,4 +31,9 @@ public class FAQService {
         FAQ faq = faqRepository.findFAQById(id).orElseThrow(() -> new IllegalArgumentException("해당 FAQ가 존재하지 않습니다."));
         faq.update(faqDto);
     }
+
+    public void delete(Long id) {
+        FAQ faq = faqRepository.findFAQById(id).orElseThrow(() -> new IllegalArgumentException("해당 FAQ가 존재하지 않습니다."));
+        faq.delete();
+    }
 }

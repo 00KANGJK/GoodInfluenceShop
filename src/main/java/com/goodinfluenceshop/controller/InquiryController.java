@@ -41,4 +41,10 @@ public class InquiryController {
         inquiryService.replyInquiry(id, dto);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/api/admin/inquiries/{id}")
+    public ResponseEntity<Void> deleteInquiry(@PathVariable Long id) {
+        inquiryService.deleteInquiry(id);
+        return ResponseEntity.ok().build();
+    }
 }

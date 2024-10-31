@@ -31,4 +31,9 @@ public class InquiryService {
         Inquiry inquiry = inquiryRepository.findInquiryById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
         inquiry.reply(dto);
     }
+
+    public void deleteInquiry(Long id) {
+        Inquiry inquiry = inquiryRepository.findInquiryById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
+        inquiry.delete();
+    }
 }

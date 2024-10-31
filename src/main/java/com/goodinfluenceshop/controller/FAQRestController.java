@@ -37,4 +37,10 @@ public class FAQRestController {
         faqService.update(id, FAQDto.from(updateFAQDto, fileService.uploadFiles(files, "faq/file")));
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/api/admin/faqs/{id}")
+    public ResponseEntity<Void> deleteFAQ(@PathVariable Long id) {
+        faqService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }
