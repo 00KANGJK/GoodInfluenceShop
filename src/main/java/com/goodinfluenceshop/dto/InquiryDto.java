@@ -115,7 +115,9 @@ public class InquiryDto {
         private String content;
         private String image;
         private String email;
+        private String answer;
         private Boolean emailChecked;
+        private Boolean isSecret;
 
         public static ResInquiryDto from(Inquiry inquiry) {
             return ResInquiryDto.builder()
@@ -126,12 +128,19 @@ public class InquiryDto {
                     .image(inquiry.getImage())
                     .email(inquiry.getEmail())
                     .emailChecked(inquiry.getEmailChecked())
+                    .answer(inquiry.getAnswer())
+                    .isSecret(inquiry.getIsSecret())
                     .build();
         }
 
         public static List<ResInquiryDto> from(List<Inquiry> inquiries) {
             return inquiries.stream()
-                    .map(ResInquiryDto::from)
+                    .map(inquiry -> ResInquiryDto.builder()
+                            .id(inquiry.getId())
+                            .category(inquiry.getCategory().getKor())
+                            .title(inquiry.getTitle())
+                            .isSecret(inquiry.getIsSecret())
+                            .build())
                     .toList();
         }
     }

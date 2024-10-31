@@ -39,8 +39,9 @@ public class InquiryService {
 
     public Inquiry getPasswordedInquiry(Long id, String password) {
         Inquiry inquiry = inquiryRepository.findInquiryById(id).orElseThrow(()->new IllegalArgumentException("해당 문의가 존재하지 않습니다."));
-        System.out.println(inquiry.getPassword());
-        System.out.println(password);
+        if (!inquiry.getIsSecret()) {
+            return inquiry;
+        }
         if (!inquiry.getPassword().equals(password)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
