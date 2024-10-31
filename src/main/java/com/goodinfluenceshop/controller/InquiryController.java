@@ -47,4 +47,17 @@ public class InquiryController {
         inquiryService.deleteInquiry(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/api/all/inquiries")
+    public ResponseEntity<List<InquiryDto.ResInquiryDto>> getOpenedInquiries() {
+        List<InquiryDto.ResInquiryDto> inquiries = InquiryDto.ResInquiryDto.from(inquiryService.getInquiries());
+        return ResponseEntity.ok(inquiries);
+    }
+
+    @GetMapping("/api/all/inquiries/{id}")
+    public ResponseEntity<InquiryDto.ResInquiryDto> getOpenedInquiry(@PathVariable Long id, @RequestParam(value="password", required = false) String password) {
+        InquiryDto.ResInquiryDto inquiry = InquiryDto.ResInquiryDto.from(inquiryService.getPasswordedInquiry(id, password));
+        inquiry.setImage(fileService.getFileUrl(inquiry.getImage()));
+        return ResponseEntity.ok(inquiry);
+    }
 }

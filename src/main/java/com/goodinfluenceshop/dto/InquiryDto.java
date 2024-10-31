@@ -14,7 +14,7 @@ import java.util.List;
 public class InquiryDto {
     private final Long id;
     private String category;
-    private Integer password;
+    private String password;
     private Boolean isSecret;
     private String title;
     private String content;
@@ -41,7 +41,7 @@ public class InquiryDto {
     @Setter
     public static class AddInquiryDto {
         private String category;
-        private Integer password;
+        private String password;
         private Boolean isSecret;
         private String title;
         private String content;
@@ -68,7 +68,7 @@ public class InquiryDto {
     public static class ResAdminInquiryDto {
         private Long id;
         private String category;
-        private Integer password;
+        private String password;
         private Boolean isSecret;
         private String title;
         private String content;
@@ -103,5 +103,36 @@ public class InquiryDto {
     @Getter
     public static class ReplyInquiryDto {
         private String answer;
+    }
+
+    @Builder
+    @Getter
+    @Setter
+    public static class ResInquiryDto {
+        private Long id;
+        private String category;
+        private String title;
+        private String content;
+        private String image;
+        private String email;
+        private Boolean emailChecked;
+
+        public static ResInquiryDto from(Inquiry inquiry) {
+            return ResInquiryDto.builder()
+                    .id(inquiry.getId())
+                    .category(inquiry.getCategory().getKor())
+                    .title(inquiry.getTitle())
+                    .content(inquiry.getContent())
+                    .image(inquiry.getImage())
+                    .email(inquiry.getEmail())
+                    .emailChecked(inquiry.getEmailChecked())
+                    .build();
+        }
+
+        public static List<ResInquiryDto> from(List<Inquiry> inquiries) {
+            return inquiries.stream()
+                    .map(ResInquiryDto::from)
+                    .toList();
+        }
     }
 }
