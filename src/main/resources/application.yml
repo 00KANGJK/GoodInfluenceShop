@@ -3,6 +3,8 @@ spring:
     name: GoodInfluenceShop
   config:
     import: classpath:s3.yml
+  datasource:
+    url: jdbc:h2:mem:fixed_db  # 고정된 데이터베이스 이름 사용
 server:
   servlet:
     encoding:
