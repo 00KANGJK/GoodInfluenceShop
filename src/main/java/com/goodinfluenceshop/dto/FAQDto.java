@@ -94,4 +94,32 @@ public class FAQDto {
                     .toList();
         }
     }
+
+    @Builder
+    @Getter
+    public static class ResFAQDto {
+        private Long id;
+        private String title;
+        private String content;
+        private List<FAQFileDto> faqFiles;
+
+        public static ResFAQDto from(FAQ faq) {
+            return ResFAQDto.builder()
+                    .id(faq.getId())
+                    .title(faq.getTitle())
+                    .content(faq.getContent())
+                    .faqFiles(FAQFileDto.listFromFAQFiles(faq.getFaqFiles()))
+                    .build();
+        }
+
+        public static List<ResFAQDto> from(List<FAQ> faqs) {
+            return faqs.stream()
+                    .map(faq -> ResFAQDto.builder()
+                            .id(faq.getId())
+                            .title(faq.getTitle())
+                            .content(faq.getContent())
+                            .build())
+                    .toList();
+        }
+    }
 }

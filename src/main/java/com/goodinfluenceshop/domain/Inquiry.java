@@ -21,7 +21,7 @@ public class Inquiry extends BaseEntity{
     private InquiryCategory category;
 
     @Column(nullable = true)
-    private Integer password;
+    private String password;
 
     @Column(nullable = false)
     private Boolean isSecret;
