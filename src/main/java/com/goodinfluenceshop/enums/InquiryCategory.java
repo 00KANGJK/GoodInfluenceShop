@@ -1,4 +1,4 @@
-package com.goodinfluenceshop.domain.enums;
+package com.goodinfluenceshop.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,7 +2,7 @@ package com.goodinfluenceshop.dto;
 
 
 import com.goodinfluenceshop.domain.Announcement;
-import com.goodinfluenceshop.domain.enums.AnnouncementCategory;
+import com.goodinfluenceshop.enums.AnnouncementCategory;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

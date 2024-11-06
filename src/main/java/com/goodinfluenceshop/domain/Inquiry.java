@@ -1,6 +1,6 @@
 package com.goodinfluenceshop.domain;
 
-import com.goodinfluenceshop.domain.enums.InquiryCategory;
+import com.goodinfluenceshop.enums.InquiryCategory;
 import com.goodinfluenceshop.dto.InquiryDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

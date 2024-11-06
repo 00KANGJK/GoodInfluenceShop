@@ -1,6 +1,6 @@
 package com.goodinfluenceshop.domain;
 
-import com.goodinfluenceshop.domain.enums.AnnouncementCategory;
+import com.goodinfluenceshop.enums.AnnouncementCategory;
 import com.goodinfluenceshop.dto.AnnouncementDto;
 import com.goodinfluenceshop.dto.AnnouncementFileDto;
 import jakarta.persistence.*;
