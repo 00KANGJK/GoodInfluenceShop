@@ -40,10 +40,10 @@ public class StoreDto {
      private String businessTypeMiddle; // 업종 중분류, 상위 카테고리에 따라 다른 enum 사용
 
      // 추가 정보
-     private LocalDateTime openTime; // 가게 영업 시작 시간
-     private LocalDateTime closeTime; // 가게 마감 시간
-     private LocalDateTime openBreakTime; // 브레이크 타임 시작 시간
-     private LocalDateTime closeBreakTime; // 브레이크 타임 마감 시간
+     private String openTime; // 가게 영업 시작 시간
+     private String closeTime; // 가게 마감 시간
+     private String openBreakTime; // 브레이크 타임 시작 시간
+     private String closeBreakTime; // 브레이크 타임 마감 시간
      private List<String> holiDays; // 휴무일
      private List<ProvideItem> provideItems; // 제공 품목
 
