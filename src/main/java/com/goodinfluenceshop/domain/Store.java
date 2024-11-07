@@ -28,10 +28,10 @@ public class Store extends StoreBaseEntity {
     private String businessNumber; // 사업자 번호
 
     // 추가 정보
-    private LocalDateTime openTime; // 가게 영업 시작 시간
-    private LocalDateTime closeTime; // 가게 마감 시간
-    private LocalDateTime openBreakTime; // 브레이크 타임 시작 시간
-    private LocalDateTime closeBreakTime; // 브레이크 타임 마감 시간
+    private String openTime; // 가게 영업 시작 시간
+    private String closeTime; // 가게 마감 시간
+    private String openBreakTime; // 브레이크 타임 시작 시간
+    private String closeBreakTime; // 브레이크 타임 마감 시간
 
     @ElementCollection
     private List<String> holiDays; // 휴무일
@@ -86,7 +86,7 @@ public class Store extends StoreBaseEntity {
     public Store() {
     }
 
-    public Store(MembershipLevel level, String storeTitle, String enrollDate, Boolean depositCheck, Boolean stickerSend, Boolean kitSend, Boolean seeAvailable, Category businessTypeBig, Enum<?> businessTypeMiddle, String businessNumber, Boolean opened, String ceoName, String storeEmail, String phoneNumber, String password, String storePhoneNumber, String storeAddress, String storeDetailAddress, LocalDateTime openTime, LocalDateTime closeTime, LocalDateTime openBreakTime, LocalDateTime closeBreakTime, List<String> holiDays, ProvideTarget1 provideTarget1, List<ProvideTarget2> provideTarget2, SnsType snsType1, String snsType1Url, SnsType snsType2, String snsType2Url, String storeImgCI, String storeImgFront, String storeImgInside, String storeImgMenupan, String storeImgMenu, List<com.goodinfluenceshop.common.ProvideItem> provideItems) {
+    public Store(MembershipLevel level, String storeTitle, String enrollDate, Boolean depositCheck, Boolean stickerSend, Boolean kitSend, Boolean seeAvailable, Category businessTypeBig, Enum<?> businessTypeMiddle, String businessNumber, Boolean opened, String ceoName, String storeEmail, String phoneNumber, String password, String storePhoneNumber, String storeAddress, String storeDetailAddress, String openTime, String closeTime, String openBreakTime, String closeBreakTime, List<String> holiDays, ProvideTarget1 provideTarget1, List<ProvideTarget2> provideTarget2, SnsType snsType1, String snsType1Url, SnsType snsType2, String snsType2Url, String storeImgCI, String storeImgFront, String storeImgInside, String storeImgMenupan, String storeImgMenu, List<com.goodinfluenceshop.common.ProvideItem> provideItems) {
         this.setLevel(level);
         this.setStoreTitle(storeTitle);
         this.setEnrollDate(enrollDate);
@@ -115,7 +115,7 @@ public class Store extends StoreBaseEntity {
         this.snsType1 = snsType1;
         this.snsType1Url = snsType1Url;
         this.snsType2 = snsType2;
-        this.snsType1Url = snsType1Url;
+        this.snsType2Url = snsType2Url;
         this.storeImgCI = storeImgCI;
         this.storeImgFront = storeImgFront;
         this.storeImgInside = storeImgInside;
