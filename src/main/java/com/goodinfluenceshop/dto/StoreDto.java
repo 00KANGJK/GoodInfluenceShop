@@ -1,9 +1,11 @@
 package com.goodinfluenceshop.dto;
 
 import com.goodinfluenceshop.common.ProvideItem;
+import com.goodinfluenceshop.enums.Category;
 import com.goodinfluenceshop.enums.MembershipLevel;
 import com.goodinfluenceshop.enums.ProvideTarget1;
 import com.goodinfluenceshop.enums.ProvideTarget2;
+import com.goodinfluenceshop.enums.SnsType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,47 +19,48 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StoreDto {
-     int no; // 번호
-     String businessNumber; // 사업자 번호
-     MembershipLevel level; // 회원구분
-     String ceoName; // 점주 이름
-     String storeTitle; // 가게명
-     String storeEmail; // 가게 이메일
-     String phoneNumber; // 휴대폰
-     String password; // 비밀번호
-     String storePhoneNumber; // 매장 번호
-     String storeAddress; // 매장 주소
-     String storeDetailAddress; // 상세 주소
-     String enrollDate; // 신청일자
-     Boolean depositCheck; // 입금 확인
-     Boolean stickerSend; // 스티커 발송
-     Boolean kitSend; // 키트 발송
-     Boolean seeAvailable; // 노출 여부
-     Boolean opened; // 영업 상태
-     String businessType; // 업종
+     private int no; // 번호
+     private String businessNumber; // 사업자 번호
+     private MembershipLevel level; // 회원구분
+     private String ceoName; // 점주 이름
+     private String storeTitle; // 가게명
+     private String storeEmail; // 가게 이메일
+     private String phoneNumber; // 휴대폰
+     private String password; // 비밀번호
+     private String storePhoneNumber; // 매장 번호
+     private String storeAddress; // 매장 주소
+     private String storeDetailAddress; // 상세 주소
+     private String enrollDate; // 신청일자
+     private Boolean depositCheck; // 입금 확인
+     private Boolean stickerSend; // 스티커 발송
+     private Boolean kitSend; // 키트 발송
+     private Boolean seeAvailable; // 노출 여부
+     private Boolean opened; // 영업 상태
+     private Category businessTypeBig; // 업종 대분류
+     private String businessTypeMiddle; // 업종 중분류, 상위 카테고리에 따라 다른 enum 사용
 
      // 추가 정보
-     LocalDateTime openTime; // 가게 영업 시작 시간
-     LocalDateTime closeTime; // 가게 마감 시간
-     LocalDateTime openBreakTime; // 브레이크 타임 시작 시간
-     LocalDateTime closeBreakTime; // 브레이크 타임 마감 시간
-     List<String> restDays; // 휴무일
+     private LocalDateTime openTime; // 가게 영업 시작 시간
+     private LocalDateTime closeTime; // 가게 마감 시간
+     private LocalDateTime openBreakTime; // 브레이크 타임 시작 시간
+     private LocalDateTime closeBreakTime; // 브레이크 타임 마감 시간
+     private List<String> holiDays; // 휴무일
      private List<ProvideItem> provideItems; // 제공 품목
 
      // 제공 대상
-     ProvideTarget1 provideTarget1; // 제공대상1 - 단일 선택
-     List<ProvideTarget2> provideTarget2; // 제공대상2 - 다중 선택 가능
+     private ProvideTarget1 provideTarget1; // 제공대상1 - 단일 선택
+     private List<ProvideTarget2> provideTarget2; // 제공대상2 - 다중 선택 가능
 
      // SNS 관련
-     String snsType1; // SNS 타입 1
-     String snsName1; // SNS 계정명 1
-     String snsType2; // SNS 타입 2
-     String snsName2; // SNS 계정명 2
+     private SnsType snsType1; // SNS 타입 1
+     private String snsType1Url; // SNS 계정명 1
+     private SnsType snsType2; // SNS 타입 2
+     private String snsType2Url; // SNS 계정명 2
 
      // 이미지
-     String storeImgCI; // 상호명 이미지
-     String storeImgFront; // 가게 전면 이미지
-     String storeImgInside; // 가게 내부 이미지
-     String storeImgMenupan; // 메뉴판 이미지
-     String storeImgMenu; // 대표 메뉴 이미지
+     private String storeImgCI; // 상호명 이미지
+     private String storeImgFront; // 가게 전면 이미지
+     private String storeImgInside; // 가게 내부 이미지
+     private String storeImgMenupan; // 메뉴판 이미지
+     private String storeImgMenu; // 대표 메뉴 이미지
 }

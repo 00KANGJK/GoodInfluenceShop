@@ -1,8 +1,6 @@
 package com.goodinfluenceshop.domain;
 
-import com.goodinfluenceshop.enums.MembershipLevel;
-import com.goodinfluenceshop.enums.ProvideTarget1;
-import com.goodinfluenceshop.enums.ProvideTarget2;
+import com.goodinfluenceshop.enums.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +34,7 @@ public class Store extends StoreBaseEntity {
     private LocalDateTime closeBreakTime; // 브레이크 타임 마감 시간
 
     @ElementCollection
-    private List<String> restDays; // 휴무일
+    private List<String> holiDays; // 휴무일
 
     // 제공 대상
     @Enumerated(EnumType.STRING)
@@ -47,10 +45,10 @@ public class Store extends StoreBaseEntity {
     private List<ProvideTarget2> provideTarget2; // 제공대상2 - 다중 선택 가능
 
     // SNS 관련
-    private String snsType1; // SNS 타입 1
-    private String snsName1; // SNS 계정명 1
-    private String snsType2; // SNS 타입 2
-    private String snsName2; // SNS 계정명 2
+    private SnsType snsType1; // SNS 타입 1
+    private String snsType1Url; // SNS 계정명 1
+    private SnsType snsType2; // SNS 타입 2
+    private String snsType2Url; // SNS 계정명 2
 
     // 이미지
     private String storeImgCI; // 상호명 이미지
@@ -88,15 +86,16 @@ public class Store extends StoreBaseEntity {
     public Store() {
     }
 
-    public Store(MembershipLevel level, String storeTitle, String enrollDate, Boolean depositCheck, Boolean stickerSend, Boolean kitSend, Boolean seeAvailable, String businessType, String businessNumber, Boolean opened, String ceoName, String storeEmail, String phoneNumber, String password, String storePhoneNumber, String storeAddress, String storeDetailAddress, LocalDateTime openTime, LocalDateTime closeTime, LocalDateTime openBreakTime, LocalDateTime closeBreakTime, List<String> restDays, ProvideTarget1 provideTarget1, List<ProvideTarget2> provideTarget2, String snsType1, String snsName1, String snsType2, String snsName2, String storeImgCI, String storeImgFront, String storeImgInside, String storeImgMenupan, String storeImgMenu, List<com.goodinfluenceshop.common.ProvideItem> provideItems) {
-        this.level = level;
-        this.storeTitle = storeTitle;
-        this.enrollDate = enrollDate;
-        this.depositCheck = depositCheck;
-        this.stickerSend = stickerSend;
-        this.kitSend = kitSend;
-        this.seeAvailable = seeAvailable;
-        this.businessType = businessType;
+    public Store(MembershipLevel level, String storeTitle, String enrollDate, Boolean depositCheck, Boolean stickerSend, Boolean kitSend, Boolean seeAvailable, Category businessTypeBig, Enum<?> businessTypeMiddle, String businessNumber, Boolean opened, String ceoName, String storeEmail, String phoneNumber, String password, String storePhoneNumber, String storeAddress, String storeDetailAddress, LocalDateTime openTime, LocalDateTime closeTime, LocalDateTime openBreakTime, LocalDateTime closeBreakTime, List<String> holiDays, ProvideTarget1 provideTarget1, List<ProvideTarget2> provideTarget2, SnsType snsType1, String snsType1Url, SnsType snsType2, String snsType2Url, String storeImgCI, String storeImgFront, String storeImgInside, String storeImgMenupan, String storeImgMenu, List<com.goodinfluenceshop.common.ProvideItem> provideItems) {
+        this.setLevel(level);
+        this.setStoreTitle(storeTitle);
+        this.setEnrollDate(enrollDate);
+        this.setDepositCheck(depositCheck);
+        this.setStickerSend(stickerSend);
+        this.setKitSend(kitSend);
+        this.setSeeAvailable(seeAvailable);
+        this.setBusinessTypeBig(businessTypeBig);
+        this.setBusinessTypeMiddle(businessTypeBig, businessTypeMiddle);
         this.businessNumber = businessNumber;
         this.opened = opened;
         this.ceoName = ceoName;
@@ -110,13 +109,13 @@ public class Store extends StoreBaseEntity {
         this.closeTime = closeTime;
         this.openBreakTime = openBreakTime;
         this.closeBreakTime = closeBreakTime;
-        this.restDays = restDays;
+        this.holiDays = holiDays;
         this.provideTarget1 = provideTarget1;
         this.provideTarget2 = provideTarget2;
         this.snsType1 = snsType1;
-        this.snsName1 = snsName1;
+        this.snsType1Url = snsType1Url;
         this.snsType2 = snsType2;
-        this.snsName2 = snsName2;
+        this.snsType1Url = snsType1Url;
         this.storeImgCI = storeImgCI;
         this.storeImgFront = storeImgFront;
         this.storeImgInside = storeImgInside;
