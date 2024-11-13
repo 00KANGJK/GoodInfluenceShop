@@ -5,3 +5,5 @@ aws:
   s3:
     bucket: good-influence-shop-3
     region: ap-northeast-2
+api:
+  serviceKey: uZsPMDcyK5akFJ4jPK5ItcEU4aHfMBFw1um6pAjSr6FjYHpA7eemFsTQGMiCOpnfkoZ5Uju%2BeLkcWAAZhPttYA%3D%3D

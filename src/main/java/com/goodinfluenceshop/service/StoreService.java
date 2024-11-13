@@ -16,23 +16,24 @@ import java.util.stream.Collectors;
 public class StoreService {
     private final StoreRepository storeRepository;
     private final ModelMapper modelMapper;
-//    private final BusinessVerificationService businessVerificationService;
+
+    private final BusinessVerificationService businessVerificationService;
 
     @Autowired
-    public StoreService(StoreRepository storeRepository, ModelMapper modelMapper) {
+    public StoreService(StoreRepository storeRepository, ModelMapper modelMapper, BusinessVerificationService businessVerificationService) {
         this.storeRepository = storeRepository;
         this.modelMapper = modelMapper;
-//        this.businessVerificationService = businessVerificationService;
+        this.businessVerificationService = businessVerificationService;
     }
 
     public StoreDto createStore(StoreDto storeDto) {
-//        // 사업자 번호와 이름 검증
-//        boolean isValid = businessVerificationService.verifyBusiness(storeDto.getBusinessNumber(), storeDto.getCeoName(), storeDto.getEnrollDate());
-//
-//        if (!isValid) {
-//            throw new IllegalArgumentException("유효하지 않은 사업자 등록 정보입니다.");
-//        }
-//        System.out.println("check 사업자");
+        // 사업자 번호와 이름 검증
+        boolean isValid = businessVerificationService.verifyBusiness(storeDto.getBusinessNumber());
+
+        if (!isValid) {
+            throw new IllegalArgumentException("유효하지 않은 사업자 등록 정보입니다.");
+        }
+        System.out.println("check 사업자");
 
         Store store = modelMapper.map(storeDto, Store.class);
         store = storeRepository.save(store);
