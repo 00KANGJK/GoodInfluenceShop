@@ -1,7 +1,7 @@
 package com.goodinfluenceshop.dto;
 
 import com.goodinfluenceshop.domain.Inquiry;
-import com.goodinfluenceshop.domain.enums.InquiryCategory;
+import com.goodinfluenceshop.enums.InquiryCategory;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
