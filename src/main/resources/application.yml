@@ -16,3 +16,11 @@ server:
   tomcat:
     uri-encoding: UTF-8
 
+external:
+  jwt:
+    tokenSecretKey: asdlkfjadlkfj123112k3j12kl3j1k2j3k1l23k1j2l3h12liaufha9f8w452398t7t23k423r0wd9ga98283723lkjskdfa0sd9ga7g7h6a
+    tokenPrefix: Bearer/u0020
+    accessKey: Authorization
+    accessTokenExpirationTime: 43200000 #12시간
+    refreshKey: RefreshToken
+    refreshTokenExpirationTime: 604800000 #7일
