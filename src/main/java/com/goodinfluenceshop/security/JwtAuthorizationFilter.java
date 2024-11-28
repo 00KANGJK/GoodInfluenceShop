@@ -53,15 +53,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
 		if(jwtHeader == null || !jwtHeader.startsWith(externalProperties.getTokenPrefix())) {
-			// 토큰 없을 시 Authentication 없는 상태로 doFilter -> Spring Security가 잡아낸다.
 			System.out.println("jwtHeader null");
 			chain.doFilter(request, response);
 			return;
 		}
 		String accessToken = jwtHeader.replace(externalProperties.getTokenPrefix(), "");
-		System.out.println("accessToken!!! : " + accessToken);
 		String adminId = authService.verifyAccessToken(accessToken);
-		System.out.println("tbuserId : " + adminId);
 
 		// 유저 조회, 없을 시 return NoMatchingDataException(404)
 		Admin adminEntity = adminRepository.findEntityGraphRoleTypeById(adminId).orElseThrow(new Supplier<NoMatchingDataException>() {

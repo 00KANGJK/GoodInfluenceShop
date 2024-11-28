@@ -19,7 +19,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     /**
 	 *  principalDetails 생성을 위한 함수.
-	 *  username으로 tbuser 조회, principalDetails 생성
+	 *  username으로 amdin 조회, principalDetails 생성
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
