@@ -20,7 +20,7 @@ public class AuthService {
     return Algorithm.HMAC512(externalProperties.getTokenSecretKey());
   }
 
-  public String createAccessToken(Long adminId) { //accessToken 생성
+  public String createAccessToken(String adminId) { //accessToken 생성
     return JWT.create()
       .withSubject("accessToken")
       .withClaim("id", adminId)
@@ -56,7 +56,7 @@ public class AuthService {
 
   public String issueAccessToken(String refreshToken) throws JWTVerificationException { //accessToken 발급
     String adminId = verifyRefreshToken(refreshToken);
-    return createAccessToken(Long.parseLong(adminId));
+    return createAccessToken(adminId);
   }
 
 }

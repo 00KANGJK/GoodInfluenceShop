@@ -49,7 +49,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     if (request.getRequestURI().startsWith("/api/all")) {
       chain.doFilter(request, response);
-      System.out.println("no jwt and pass");
       return;
     }
 
@@ -78,7 +77,5 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		chain.doFilter(request, response);
-
 	}
-
 }

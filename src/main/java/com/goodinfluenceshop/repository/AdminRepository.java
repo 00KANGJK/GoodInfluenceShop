@@ -10,6 +10,6 @@ public interface AdminRepository extends JpaRepository<Admin, String> {
   Admin findByEmail(String email);
   Admin findByEmailAndPassword(String email, String password);
 
-  @EntityGraph(attributePaths = {"adminRoleType.roleType"})
-  Optional<Admin>  findEntityGraphRoleTypeById(String id);
+  @EntityGraph(attributePaths = {"adminRoleTypes", "adminRoleTypes.roleType"})
+  Optional<Admin> findEntityGraphRoleTypeById(String id);
 }

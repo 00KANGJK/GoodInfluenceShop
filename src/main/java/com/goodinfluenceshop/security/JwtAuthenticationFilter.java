@@ -19,7 +19,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.IOException;
 
-//2024-07-03 추가(클래스 처음 추가함)
 @Transactional
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -39,15 +38,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Transactional
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 		Authentication authentication = null;
-		AdminDto.LoginReqDto tbuserLoginDto = null;
+		AdminDto.LoginReqDto adminLoginDto = null;
 		try {
-			tbuserLoginDto = objectMapper.readValue(request.getInputStream(), AdminDto.LoginReqDto.class);
+      adminLoginDto = objectMapper.readValue(request.getInputStream(), AdminDto.LoginReqDto.class);
 		} catch (IOException e) {
 			System.out.println("1. login attemptAuthentication : Not Enough Parameters?!");
 		}
 
 		try {
-			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(tbuserLoginDto.getEmail(), tbuserLoginDto.getPassword());
+			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(adminLoginDto.getEmail(), adminLoginDto.getPassword());
 			authentication = authenticationManager.authenticate(authenticationToken);
 		} catch (AuthenticationException e) {
 			System.out.println("2. login attemptAuthentication : username, password Not Mathced?!");
@@ -63,13 +62,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 		PrincipalDetails principalDetails = (PrincipalDetails)authResult.getPrincipal();
-		// TbuserId로 리프레시토큰 발급
-		System.out.println("principalDetails.getTbuser().getId() : " + principalDetails.getAdmin().getId());
 		String refreshToken = authService.createRefreshToken(principalDetails.getAdmin().getId());
 
 		// header에 담아서 전달!!
 		response.addHeader(externalProperties.getRefreshKey(), externalProperties.getTokenPrefix() + refreshToken);
-
 
 		System.out.println("successfulAuthentication : login success?!");
 	}

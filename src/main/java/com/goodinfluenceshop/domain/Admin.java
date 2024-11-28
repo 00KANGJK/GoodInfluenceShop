@@ -35,7 +35,7 @@ public class Admin {
     this.deleted = "N"; // 기본 삭제 여부 설정
     this.createdDate = LocalDateTime.now(); // 생성일시 설정
     this.modifyDate = LocalDateTime.now(); // 수정일시 설정
-    this.id = UUID.randomUUID().toString(); // UUID를 문자열로 변환하여 ID로 사용
+    this.id = UUID.randomUUID().toString().replace("-", ""); // UUID를 문자열로 변환하여 ID로 사용
   }
 
   public List<AdminRoleType> getAdminRoleTypes() {
@@ -47,11 +47,18 @@ public class Admin {
   }
 
   public AdminDto.CreateResDto toCreateResDto() {
-    return AdminDto.CreateResDto.builder().id(this.getId()).build();
+    return AdminDto.CreateResDto
+      .builder()
+      .id(this.getId())
+      .email(this.getEmail())
+      .password(this.getPassword())
+      .name(this.getName())
+      .build();
   }
 
   @PreUpdate
   public void onPreUpdate() {
     this.modifyDate = LocalDateTime.now(); // 수정 시 수정일시 업데이트
   }
+
 }

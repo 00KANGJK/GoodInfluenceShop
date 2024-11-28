@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class LoginResController {
       throw new RuntimeException("should login");
     }
     DefaultDto.DetailReqDto param = DefaultDto.DetailReqDto.builder().id(reqAdminId).build();
-    return ResponseEntity.status(HttpStatus.OK).body(adminService.logout(param)); // adminService 사용
+    return ResponseEntity.status(HttpStatus.OK).body(adminService.logout(param));
   }
 
   @PostMapping("/login")
@@ -39,9 +40,10 @@ public class LoginResController {
     return ResponseEntity.status(HttpStatus.CREATED).body(adminService.login(param)); // adminService 사용
   }
 
-  @PostMapping("/signup")
+  @PostMapping(value = "/signup")
   public ResponseEntity<AdminDto.CreateResDto> signup(@Valid @RequestBody AdminDto.SignupReqDto param) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(adminService.signup(param)); // adminService 사용
+    AdminDto.CreateResDto response = adminService.signup(param);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
   @PostMapping("")

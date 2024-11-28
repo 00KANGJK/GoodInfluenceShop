@@ -59,21 +59,21 @@ public class AdminService {
   }
 
   public AdminDto.CreateResDto create(AdminDto.CreateReqDto param) {
-    //비번 암호화를 위한 코드
+    //비번 암호화를 위한 코드\
     param.setPassword(bCryptPasswordEncoder.encode(param.getPassword()));
 
     //사용자 등록 완료!/
-    Admin tbuser = adminRepository.save(param.toEntity());
+    Admin admin = adminRepository.save(param.toEntity());
 
-    RoleType roleType = roleTypeRepository.findByRoleType(LoginRoleType.USER);
+    RoleType roleType = roleTypeRepository.findByRoleType(LoginRoleType.ADMIN);
     if(roleType == null){
       roleType = new RoleType();
-      roleType.setRoleType(LoginRoleType.USER);
+      roleType.setRoleType(LoginRoleType.ADMIN);
       roleTypeRepository.save(roleType);
     }
-    AdminRoleType tbuserRoleType = AdminRoleType.of(tbuser, roleType);
-    tbuserRoleTypeRepository.save(tbuserRoleType);
-
-    return tbuser.toCreateResDto();
+    AdminRoleType adminRoleType = AdminRoleType.of(admin, roleType);
+    System.out.println("adminRoleType : " + adminRoleType.getRoleType().getRoleType());
+    tbuserRoleTypeRepository.save(adminRoleType);
+    return admin.toCreateResDto();
   }
 }

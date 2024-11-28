@@ -1,6 +1,7 @@
 package com.goodinfluenceshop.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.goodinfluenceshop.enums.LoginRoleType;
 import com.goodinfluenceshop.repository.AdminRepository;
 import com.goodinfluenceshop.security.FilterExceptionHandlerFilter;
 import com.goodinfluenceshop.security.JwtAuthenticationFilter;
@@ -51,9 +52,8 @@ public class SecurityConfig {
       .httpBasic(AbstractHttpConfigurer::disable)
       .addFilter(corsFilterConfiguration.corsFilter())
       .authorizeHttpRequests(auth -> {
-        auth.requestMatchers("/api/all").permitAll() // 누구나 접근 가능
-          .requestMatchers("/api/admin/**").hasRole("ADMIN") // 관리자만 접근 가능
-          .anyRequest().authenticated(); // 그 외 요청은 인증 필요
+        auth.requestMatchers("/api/admin/**").hasAuthority("ADMIN") // 관리자만 접근 가능
+          .anyRequest().permitAll(); // 그 외 요청은 인증 필요
       })
       .apply(new CustomDsl());
 
@@ -66,7 +66,8 @@ public class SecurityConfig {
     public void configure(HttpSecurity http) throws Exception {
       AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
       JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, objectMapper, authService, externalProperties);
-      jwtAuthenticationFilter.setFilterProcessesUrl("/api/login");
+      System.out.println("jwtAuthenticationFilter : " + jwtAuthenticationFilter);
+      jwtAuthenticationFilter.setFilterProcessesUrl("/api/all/login");
 
       http.addFilter(corsFilterConfiguration.corsFilter())
         .addFilter(jwtAuthenticationFilter)
