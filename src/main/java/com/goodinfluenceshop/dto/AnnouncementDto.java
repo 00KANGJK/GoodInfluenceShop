@@ -31,13 +31,13 @@ public class AnnouncementDto {
                 .build();
     }
 
-    public static AnnouncementDto from(UpdateAnnouncementDto updateAnnouncementDto, List<FileDto> fileDtos) {
+    public static AnnouncementDto from(UpdateAnnouncementDto updateAnnouncementDto) {
         return AnnouncementDto.builder()
                 .title(updateAnnouncementDto.getTitle())
                 .content(updateAnnouncementDto.getContent())
                 .category(updateAnnouncementDto.getCategory())
                 .isOpened(updateAnnouncementDto.getIsOpened())
-                .announcementFiles(AnnouncementFileDto.listFromFileDtos(fileDtos))
+                .announcementFiles(AnnouncementFileDto.listFromFileDtos(updateAnnouncementDto.getAnnouncementFiles()))
                 .build();
     }
 
@@ -108,6 +108,7 @@ public class AnnouncementDto {
         private String content;
         private String category;
         private Boolean isOpened;
+        private List<FileDto> announcementFiles;
     }
 
     @Builder
