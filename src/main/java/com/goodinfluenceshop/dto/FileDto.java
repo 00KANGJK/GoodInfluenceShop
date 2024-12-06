@@ -31,4 +31,18 @@ public class FileDto {
         private String filePath;
         private String originalFileName;
     }
+
+    @Getter
+    @Builder
+    public static class ResFileUploadDto {
+        private String filePath;
+        private String originalFileName;
+
+        public static ResFileUploadDto from(FileDto dto) {
+            return ResFileUploadDto.builder()
+                    .filePath(dto.getFilePath())
+                    .originalFileName(dto.getOriginalFileName())
+                    .build();
+        }
+    }
 }
