@@ -17,8 +17,8 @@ public class AnnouncementRestController {
     private final FileService fileService;
 
     @PostMapping("/api/admin/announcements")
-    public ResponseEntity<Void> createAnnouncement(@ModelAttribute AnnouncementDto.AddAnnouncementDto addAnnouncementDto, @RequestParam(value = "file", required = false) List<MultipartFile> file) {
-        announcementService.createAnnouncement(AnnouncementDto.from(addAnnouncementDto, fileService.uploadFiles(file, "announcement/file")));
+    public ResponseEntity<Void> createAnnouncement(@RequestBody AnnouncementDto.AddAnnouncementDto addAnnouncementDto) {
+        announcementService.createAnnouncement(AnnouncementDto.from(addAnnouncementDto));
         return ResponseEntity.ok().build();
     }
 
