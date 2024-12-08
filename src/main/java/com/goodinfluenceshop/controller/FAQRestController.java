@@ -14,7 +14,7 @@ public class FAQRestController {
     private final FAQService faqService;
 
     @PostMapping("/api/admin/faqs")
-    public ResponseEntity<Void> createFAQ(@ModelAttribute FAQDto.AddFAQDto addFAQDto) {
+    public ResponseEntity<Void> createFAQ(@RequestBody FAQDto.AddFAQDto addFAQDto) {
         faqService.save(FAQDto.from(addFAQDto));
         return ResponseEntity.ok().build();
     }
