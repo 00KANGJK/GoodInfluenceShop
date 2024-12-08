@@ -23,14 +23,14 @@ public class InquiryDto {
     private Boolean emailChecked;
     private String answer;
 
-    public static InquiryDto from(AddInquiryDto dto, FileDto fileDto) {
+    public static InquiryDto from(AddInquiryDto dto) {
         return InquiryDto.builder()
                 .category(dto.getCategory())
                 .password(dto.getPassword())
                 .isSecret(dto.getIsSecret())
                 .title(dto.getTitle())
                 .content(dto.getContent())
-                .image(fileDto.getFilePath())
+                .image(dto.getImage())
                 .email(dto.getEmail())
                 .emailChecked(dto.getEmailChecked())
                 .build();
@@ -47,6 +47,7 @@ public class InquiryDto {
         private String content;
         private String email;
         private Boolean emailChecked;
+        private String image;
     }
 
     public Inquiry toEntity() {

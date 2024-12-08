@@ -18,8 +18,8 @@ public class InquiryController {
     private final FileService fileService;
 
     @PostMapping("/api/all/inquiries")
-    public ResponseEntity<Void> createInquiry(@ModelAttribute InquiryDto.AddInquiryDto dto, @RequestParam(value = "image", required = false) MultipartFile image) throws FileUploadException {
-        inquiryService.createInquiry(InquiryDto.from(dto, fileService.upload(image, "inquiry/image/")));
+    public ResponseEntity<Void> createInquiry(@ModelAttribute InquiryDto.AddInquiryDto dto) {
+        inquiryService.createInquiry(InquiryDto.from(dto));
         return ResponseEntity.ok().build();
     }
 
