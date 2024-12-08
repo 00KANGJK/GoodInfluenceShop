@@ -1,13 +1,11 @@
 package com.goodinfluenceshop.controller;
 
-import com.goodinfluenceshop.exception.FileUploadException;
 import com.goodinfluenceshop.service.FileService;
 import com.goodinfluenceshop.service.InquiryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.goodinfluenceshop.dto.InquiryDto;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,8 +16,8 @@ public class InquiryController {
     private final FileService fileService;
 
     @PostMapping("/api/all/inquiries")
-    public ResponseEntity<Void> createInquiry(@ModelAttribute InquiryDto.AddInquiryDto dto, @RequestParam(value = "image", required = false) MultipartFile image) throws FileUploadException {
-        inquiryService.createInquiry(InquiryDto.from(dto, fileService.upload(image, "inquiry/image/")));
+    public ResponseEntity<Void> createInquiry(@RequestBody InquiryDto.AddInquiryDto dto) {
+        inquiryService.createInquiry(InquiryDto.from(dto));
         return ResponseEntity.ok().build();
     }
 

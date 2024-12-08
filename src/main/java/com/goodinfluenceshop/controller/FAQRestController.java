@@ -2,11 +2,9 @@ package com.goodinfluenceshop.controller;
 
 import com.goodinfluenceshop.dto.FAQDto;
 import com.goodinfluenceshop.service.FAQService;
-import com.goodinfluenceshop.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,11 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FAQRestController {
     private final FAQService faqService;
-    private final FileService fileService;
 
     @PostMapping("/api/admin/faqs")
-    public ResponseEntity<Void> createFAQ(@ModelAttribute FAQDto.AddFAQDto addFAQDto, @RequestParam(value = "file", required = false) List<MultipartFile> files) {
-        faqService.save(FAQDto.from(addFAQDto, fileService.uploadFiles(files, "faq/file")));
+    public ResponseEntity<Void> createFAQ(@ModelAttribute FAQDto.AddFAQDto addFAQDto) {
+        faqService.save(FAQDto.from(addFAQDto));
         return ResponseEntity.ok().build();
     }
 
@@ -33,8 +30,8 @@ public class FAQRestController {
     }
 
     @PatchMapping("/api/admin/faqs/{id}")
-    public ResponseEntity<Void> updateFAQ(@PathVariable Long id, @ModelAttribute FAQDto.UpdateFAQDto updateFAQDto, @RequestParam(value = "files", required = false) List<MultipartFile> files) {
-        faqService.update(id, FAQDto.from(updateFAQDto, fileService.uploadFiles(files, "faq/file")));
+    public ResponseEntity<Void> updateFAQ(@PathVariable Long id, @RequestBody FAQDto.UpdateFAQDto updateFAQDto) {
+        faqService.update(id, FAQDto.from(updateFAQDto));
         return ResponseEntity.ok().build();
     }
 

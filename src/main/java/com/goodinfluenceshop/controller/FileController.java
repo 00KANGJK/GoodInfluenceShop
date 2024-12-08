@@ -26,6 +26,11 @@ public class FileController {
         return ResponseEntity.ok(FileDto.ResImageUploadDto.from(fileService.getFileUrl(fileService.upload(image, "image/").getFilePath())));
     }
 
+    @PostMapping("/api/all/file")
+    public ResponseEntity<FileDto.ResFileUploadDto> uploadFile(MultipartFile file) throws FileUploadException {
+        return ResponseEntity.ok(FileDto.ResFileUploadDto.from(fileService.upload(file, "file/")));
+    }
+
     @PostMapping("/api/all/file/download")
     public ResponseEntity<InputStreamResource> downloadFile(@RequestBody FileDto.DownloadFileDto dto) {
         String encodedFileName = URLEncoder.encode(dto.getOriginalFileName(), StandardCharsets.UTF_8);

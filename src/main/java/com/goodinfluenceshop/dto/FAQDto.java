@@ -18,21 +18,21 @@ public class FAQDto {
     private Boolean isOpened;
     private List<FAQFileDto> faqFiles;
 
-    public static FAQDto from(AddFAQDto addFAQDto, List<FileDto> fileDtos) {
+    public static FAQDto from(AddFAQDto addFAQDto) {
         return FAQDto.builder()
                 .title(addFAQDto.getTitle())
                 .content(addFAQDto.getContent())
                 .isOpened(addFAQDto.getIsOpened())
-                .faqFiles(FAQFileDto.listFromFileDtos(fileDtos))
+                .faqFiles(FAQFileDto.listFromFileDtos(addFAQDto.getFaqFiles()))
                 .build();
     }
 
-    public static FAQDto from(UpdateFAQDto updateFAQDto, List<FileDto> fileDtos) {
+    public static FAQDto from(UpdateFAQDto updateFAQDto) {
         return FAQDto.builder()
                 .title(updateFAQDto.getTitle())
                 .content(updateFAQDto.getContent())
                 .isOpened(updateFAQDto.getIsOpened())
-                .faqFiles(FAQFileDto.listFromFileDtos(fileDtos))
+                .faqFiles(FAQFileDto.listFromFileDtos(updateFAQDto.getFaqFiles()))
                 .build();
     }
 
@@ -53,6 +53,7 @@ public class FAQDto {
         private String title;
         private String content;
         private Boolean isOpened;
+        private List<FileDto> faqFiles;
     }
 
     @NoArgsConstructor
@@ -62,6 +63,7 @@ public class FAQDto {
         private String title;
         private String content;
         private Boolean isOpened;
+        private List<FileDto> faqFiles;
     }
 
     @Builder
