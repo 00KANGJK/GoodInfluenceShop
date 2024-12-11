@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -73,6 +74,7 @@ public class FAQDto {
         private String title;
         private String content;
         private Boolean isOpened;
+        private LocalDateTime createdDate;
         private List<FAQFileDto> faqFiles;
 
         public static ResAdminFAQDto from(FAQ faq) {
@@ -81,6 +83,7 @@ public class FAQDto {
                     .title(faq.getTitle())
                     .content(faq.getContent())
                     .isOpened(faq.getIsOpened())
+                    .createdDate(faq.getCreatedDate())
                     .faqFiles(FAQFileDto.listFromFAQFiles(faq.getFaqFiles()))
                     .build();
         }
@@ -92,6 +95,7 @@ public class FAQDto {
                             .title(faq.getTitle())
                             .content(faq.getContent())
                             .isOpened(faq.getIsOpened())
+                            .createdDate(faq.getCreatedDate())
                             .build())
                     .toList();
         }
@@ -103,6 +107,7 @@ public class FAQDto {
         private Long id;
         private String title;
         private String content;
+        private LocalDateTime createdDate;
         private List<FAQFileDto> faqFiles;
 
         public static ResFAQDto from(FAQ faq) {
@@ -110,6 +115,7 @@ public class FAQDto {
                     .id(faq.getId())
                     .title(faq.getTitle())
                     .content(faq.getContent())
+                    .createdDate(faq.getCreatedDate())
                     .faqFiles(FAQFileDto.listFromFAQFiles(faq.getFaqFiles()))
                     .build();
         }
@@ -120,6 +126,7 @@ public class FAQDto {
                             .id(faq.getId())
                             .title(faq.getTitle())
                             .content(faq.getContent())
+                            .createdDate(faq.getCreatedDate())
                             .build())
                     .toList();
         }
