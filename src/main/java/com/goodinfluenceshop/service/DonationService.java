@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DonationService {
@@ -23,58 +21,28 @@ public class DonationService {
   }
 
   private DonationDto convertToDto(Donation donation) {
-    DonationDto donationDto = new DonationDto();
-    donationDto.setId(donation.getId());
-    donationDto.setTotalDonation(donation.getTotalDonation());
-    donationDto.setTotalCount(donation.getTotalCount());
-    donationDto.setTotalSpend(donation.getTotalSpend());
-    return donationDto;
+    return modelMapper.map(donation, DonationDto.class);
   }
 
   public DonationDto createDonation(DonationDto donationDto) {
     Donation donation = modelMapper.map(donationDto, Donation.class);
-    System.out.println("Before saving: " + donation); // 로그 출력
     donation = donationRepository.save(donation);
-    System.out.println("After saving: " + donation);
     return modelMapper.map(donation, DonationDto.class);
   }
 
-  public List<DonationDto> getRecentDonations() {
-    List<Donation> donations = donationRepository.findRecentDonations();
-    return donations.stream()
-      .map(this::convertToDto)
-      .collect(Collectors.toList());
+  public DonationDto getRecentDonation() {
+    Donation donation = donationRepository.findRecentDonations()
+      .stream()
+      .findFirst()
+      .orElseThrow(() -> new EntityNotFoundException("No recent donations found"));
+    return convertToDto(donation);
   }
 
-  public void deleteDonation(Long id) {
-    Donation donation = donationRepository.findById(id)
-      .orElseThrow(() -> new EntityNotFoundException("Donation not found"));
-    donation.setDeleted("Y");
-    donationRepository.save(donation);
-  }
-
-
-//  public Optional<DonationDto> getDonationById(String id) {
-//    return donationRepository.findById(id)
-//      .map(donation -> modelMapper.map(donation, DonationDto.class));
-//  }
-//
-//  public DonationDto updateDonation(String id, DonationDto donationDto) {
+//  public void deleteDonation(Long id) {
 //    Donation donation = donationRepository.findById(id)
-//      .orElseThrow(() -> new RuntimeException("Donation not found"));
-//
-//    donation.setTotalDonation(donationDto.getTotalDonation());
-//    donation.setTotalCount(donationDto.getTotalCount());
-//    donation.setTotalSpend(donationDto.getTotalSpend());
-//
-//    donation = donationRepository.save(donation);
-//    return modelMapper.map(donation, DonationDto.class);
-//  }
-//  public List<DonationDto> getAllDonations() {
-//    List<Donation> donations = donationRepository.findAllActiveDonations();
-//    return donations.stream()
-//      .map(this::convertToDto)
-//      .collect(Collectors.toList());
+//      .orElseThrow(() -> new EntityNotFoundException("Donation not found"));
+//    donation.setDeleted("Y");
+//    donationRepository.save(donation);
 //  }
 }
 
