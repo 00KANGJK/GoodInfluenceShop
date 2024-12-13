@@ -21,8 +21,8 @@ public class DonationRestController {
   }
 
   @GetMapping("/all/donations")
-  public ResponseEntity<List<DonationDto>> getRecentDonations() {
-    List<DonationDto> donations = donationService.getRecentDonations();
+  public ResponseEntity<DonationDto> getRecentDonations() {
+    DonationDto donations = donationService.getRecentDonation();
     return new ResponseEntity<>(donations, HttpStatus.OK);
   }
 }
