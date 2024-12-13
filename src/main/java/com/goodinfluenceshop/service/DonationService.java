@@ -38,11 +38,11 @@ public class DonationService {
     return convertToDto(donation);
   }
 
-  public void deleteDonation(Long id) {
-    Donation donation = donationRepository.findById(id)
-      .orElseThrow(() -> new EntityNotFoundException("Donation not found"));
-    donation.setDeleted("Y");
-    donationRepository.save(donation);
-  }
+//  public void deleteDonation(Long id) {
+//    Donation donation = donationRepository.findById(id)
+//      .orElseThrow(() -> new EntityNotFoundException("Donation not found"));
+//    donation.setDeleted("Y");
+//    donationRepository.save(donation);
+//  }
 }
 
