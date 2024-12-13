@@ -3,7 +3,6 @@ package com.goodinfluenceshop.service;
 import com.goodinfluenceshop.repository.PopUpRepository;
 import com.goodinfluenceshop.dto.PopUpDto;
 import com.goodinfluenceshop.domain.PopUp;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
