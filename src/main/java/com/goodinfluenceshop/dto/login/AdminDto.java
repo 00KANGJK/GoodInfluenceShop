@@ -41,9 +41,6 @@ public class AdminDto {
   @Getter
   public static class CreateResDto {
     private String id;
-    private String email;
-    private String password;
-    private String name;
   }
 
   @Builder

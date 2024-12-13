@@ -50,9 +50,6 @@ public class Admin {
     return AdminDto.CreateResDto
       .builder()
       .id(this.getId())
-      .email(this.getEmail())
-      .password(this.getPassword())
-      .name(this.getName())
       .build();
   }
 
