@@ -40,9 +40,7 @@ public class Announcement extends BaseEntity {
         this.content = dto.getContent();
         this.isOpened = dto.getIsOpened();
         this.category = AnnouncementCategory.from(dto.getCategory());
-        if(!dto.getAnnouncementFiles().isEmpty()) {
-            this.announcementFiles.clear();
-            this.announcementFiles.addAll(AnnouncementFileDto.listToEntity(dto.getAnnouncementFiles(), this));
-        }
+        this.announcementFiles.clear();
+        this.announcementFiles.addAll(AnnouncementFileDto.listToEntity(dto.getAnnouncementFiles(), this));
     }
 }
