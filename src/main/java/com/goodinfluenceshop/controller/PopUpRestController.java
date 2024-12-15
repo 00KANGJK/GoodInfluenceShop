@@ -1,5 +1,6 @@
 package com.goodinfluenceshop.controller;
 
+import com.goodinfluenceshop.dto.FileDto;
 import com.goodinfluenceshop.dto.PopUpDto;
 import com.goodinfluenceshop.service.FileService;
 import com.goodinfluenceshop.service.PopUpService;

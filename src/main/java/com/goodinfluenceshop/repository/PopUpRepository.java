@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PopUpRepository extends JpaRepository<PopUp, Long> {
-  @Query("SELECT p FROM PopUp p WHERE p.deleted = :deleted AND p.startDate <= :currentDate AND p.endDate >= :currentDate")
+  @Query("SELECT p FROM PopUp p WHERE p.deleted = :deleted AND p.isVisible = true AND p.startDate <= :currentDate AND p.endDate >= :currentDate")
   List<PopUp> findVisiblePopUpsByDeleted(@Param("currentDate") LocalDateTime currentDate, @Param("deleted") String deleted);
 
   // 삭제되지 않은 모든 PopUp 조회

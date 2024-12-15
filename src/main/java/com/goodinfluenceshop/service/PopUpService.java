@@ -1,5 +1,7 @@
 package com.goodinfluenceshop.service;
 
+import com.goodinfluenceshop.domain.PopUpFile;
+import com.goodinfluenceshop.dto.PopUpFileDto;
 import com.goodinfluenceshop.repository.PopUpRepository;
 import com.goodinfluenceshop.dto.PopUpDto;
 import com.goodinfluenceshop.domain.PopUp;
@@ -16,10 +18,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PopUpService {
   private final PopUpRepository popUpRepository;
-  private final ModelMapper modelMapper;
 
   public void createPopUp(PopUpDto popUpDto) {
-    PopUp popUp = modelMapper.map(popUpDto, PopUp.class);
+    // PopUp 엔티티 생성
+    PopUp popUp = PopUp.builder()
+      .title(popUpDto.getTitle())
+      .content(popUpDto.getContent())
+      .isVisible(popUpDto.isVisible())
+      .startDate(popUpDto.getStartDate())
+      .endDate(popUpDto.getEndDate())
+      .build();
+
+    // PopUpFiles 매핑
+    if (popUpDto.getPopUpFiles() != null && !popUpDto.getPopUpFiles().isEmpty()) {
+      List<PopUpFile> popUpFiles = PopUpFileDto.listToEntity(popUpDto.getPopUpFiles(), popUp);
+      popUp.setPopUpFiles(popUpFiles);
+    }
+
+    // 저장
     popUpRepository.save(popUp);
   }
 
