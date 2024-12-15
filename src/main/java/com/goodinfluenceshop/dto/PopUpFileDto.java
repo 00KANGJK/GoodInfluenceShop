@@ -33,14 +33,24 @@ public class PopUpFileDto {
                 .toList();
     }
 
-    public static List<PopUpFile> listToEntity(List<PopUpFileDto> popUpFiles, PopUp popUp) {
-        return popUpFiles.stream()
-                .map(popUpFileDto -> PopUpFile.builder()
-                        .popUp(popUp)
-                        .filePath(popUpFileDto.getFilePath())
-                        .originalFileName(popUpFileDto.getOriginalFileName())
-                        .build())
-                .toList();
-    }
+  public static List<PopUpFile> listToEntity(List<PopUpFileDto> popUpFiles, PopUp popUp) {
+    return popUpFiles.stream()
+      .map(popUpFileDto -> {
+        PopUpFile popUpFile = PopUpFile.builder()
+          .filePath(popUpFileDto.getFilePath())
+          .originalFileName(popUpFileDto.getOriginalFileName())
+          .build();
+        popUpFile.setPopUp(popUp); // 연관 관계 설정
+        return popUpFile;
+      })
+      .toList();
+  }
 
+
+  public static PopUpFileDto fromFileDto(FileDto fileDto) {
+    return PopUpFileDto.builder()
+      .filePath(fileDto.getFilePath())
+      .originalFileName(fileDto.getOriginalFileName())
+      .build();
+  }
 }
