@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -21,8 +20,8 @@ public class DonationRestController {
   }
 
   @GetMapping("/all/donations")
-  public ResponseEntity<List<DonationDto>> getRecentDonations() {
-    List<DonationDto> donations = donationService.getRecentDonations();
+  public ResponseEntity<DonationDto> getRecentDonations() {
+    DonationDto donations = donationService.getRecentDonation();
     return new ResponseEntity<>(donations, HttpStatus.OK);
   }
 }

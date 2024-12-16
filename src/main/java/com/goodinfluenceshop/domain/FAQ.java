@@ -34,9 +34,7 @@ public class FAQ extends BaseEntity {
         this.title = dto.getTitle();
         this.content = dto.getContent();
         this.isOpened = dto.getIsOpened();
-        if(!dto.getFaqFiles().isEmpty()) {
-            this.faqFiles.clear();
-            this.faqFiles.addAll(FAQFileDto.listToEntity(dto.getFaqFiles(), this));
-        }
+        this.faqFiles.clear();
+        this.faqFiles.addAll(FAQFileDto.listToEntity(dto.getFaqFiles(), this));
     }
 }

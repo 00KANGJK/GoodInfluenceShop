@@ -29,9 +29,9 @@ public class PopUp extends BaseEntity {
   private LocalDateTime endDate; // 팝업 공개 종료일
 
   @OneToMany(mappedBy = "popUp",
-          fetch = FetchType.LAZY,
-          cascade = CascadeType.ALL,
-          orphanRemoval = true)
+    fetch = FetchType.LAZY,
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
   private List<PopUpFile> popUpFiles; // 팝업 파일 목록
 
   public void update(PopUpDto dto) {
@@ -40,9 +40,11 @@ public class PopUp extends BaseEntity {
     this.isVisible = dto.isVisible();
     this.startDate = dto.getStartDate();
     this.endDate = dto.getEndDate();
-    if(!dto.getPopUpFiles().isEmpty()) {
+
+    if (dto.getPopUpFiles() != null && !dto.getPopUpFiles().isEmpty()) {
+      List<PopUpFile> newFiles = PopUpFileDto.listToEntity(dto.getPopUpFiles(), this);
       this.popUpFiles.clear();
-      this.popUpFiles.addAll(PopUpFileDto.listToEntity(dto.getPopUpFiles(), this));
+      this.popUpFiles.addAll(newFiles);
     }
   }
 }

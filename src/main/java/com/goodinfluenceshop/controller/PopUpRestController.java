@@ -1,11 +1,10 @@
 package com.goodinfluenceshop.controller;
 
-import com.goodinfluenceshop.domain.PopUp;
+import com.goodinfluenceshop.dto.FileDto;
 import com.goodinfluenceshop.dto.PopUpDto;
 import com.goodinfluenceshop.service.FileService;
 import com.goodinfluenceshop.service.PopUpService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,6 +43,11 @@ public class PopUpRestController {
   @PatchMapping("/admin/popups/{id}")
   public ResponseEntity<Void> updatePopUp(@PathVariable Long id,@ModelAttribute PopUpDto.UpdatePopUpDto updatePopUpDto, @RequestParam(value = "file", required = false) List<MultipartFile> files) {
     popUpService.updatePopUp(id, PopUpDto.from(updatePopUpDto, fileService.uploadFiles(files, "popup/file")));
+    return ResponseEntity.ok().build();
+  }
+  @DeleteMapping("/admin/popups/{id}")
+  public ResponseEntity<Void> softDeletePopUp(@PathVariable Long id) {
+    popUpService.softDeletePopUp(id);
     return ResponseEntity.ok().build();
   }
 }

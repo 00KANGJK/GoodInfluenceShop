@@ -14,4 +14,5 @@ public class DonationDto {
   private int totalDonation;
   private int totalCount;
   private int totalSpend;
+  private int totalChildrenCount;
 }

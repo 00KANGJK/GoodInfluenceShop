@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -23,14 +24,14 @@ public class InquiryDto {
     private Boolean emailChecked;
     private String answer;
 
-    public static InquiryDto from(AddInquiryDto dto, FileDto fileDto) {
+    public static InquiryDto from(AddInquiryDto dto) {
         return InquiryDto.builder()
                 .category(dto.getCategory())
                 .password(dto.getPassword())
                 .isSecret(dto.getIsSecret())
                 .title(dto.getTitle())
                 .content(dto.getContent())
-                .image(fileDto.getFilePath())
+                .image(dto.getImage())
                 .email(dto.getEmail())
                 .emailChecked(dto.getEmailChecked())
                 .build();
@@ -47,6 +48,7 @@ public class InquiryDto {
         private String content;
         private String email;
         private Boolean emailChecked;
+        private String image;
     }
 
     public Inquiry toEntity() {
@@ -76,6 +78,7 @@ public class InquiryDto {
         private String email;
         private Boolean emailChecked;
         private String answer;
+        private LocalDateTime createdDate;
 
         public static ResAdminInquiryDto from(Inquiry inquiry) {
             return ResAdminInquiryDto.builder()
@@ -89,6 +92,7 @@ public class InquiryDto {
                     .email(inquiry.getEmail())
                     .emailChecked(inquiry.getEmailChecked())
                     .answer(inquiry.getAnswer())
+                    .createdDate(inquiry.getCreatedDate())
                     .build();
         }
 
@@ -118,6 +122,7 @@ public class InquiryDto {
         private String answer;
         private Boolean emailChecked;
         private Boolean isSecret;
+        private LocalDateTime createdDate;
 
         public static ResInquiryDto from(Inquiry inquiry) {
             return ResInquiryDto.builder()
@@ -129,6 +134,7 @@ public class InquiryDto {
                     .email(inquiry.getEmail())
                     .emailChecked(inquiry.getEmailChecked())
                     .answer(inquiry.getAnswer())
+                    .createdDate(inquiry.getCreatedDate())
                     .isSecret(inquiry.getIsSecret())
                     .build();
         }
@@ -140,6 +146,7 @@ public class InquiryDto {
                             .category(inquiry.getCategory().getKor())
                             .title(inquiry.getTitle())
                             .isSecret(inquiry.getIsSecret())
+                            .content(inquiry.getContent())
                             .build())
                     .toList();
         }

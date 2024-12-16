@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -18,21 +19,21 @@ public class FAQDto {
     private Boolean isOpened;
     private List<FAQFileDto> faqFiles;
 
-    public static FAQDto from(AddFAQDto addFAQDto, List<FileDto> fileDtos) {
+    public static FAQDto from(AddFAQDto addFAQDto) {
         return FAQDto.builder()
                 .title(addFAQDto.getTitle())
                 .content(addFAQDto.getContent())
                 .isOpened(addFAQDto.getIsOpened())
-                .faqFiles(FAQFileDto.listFromFileDtos(fileDtos))
+                .faqFiles(FAQFileDto.listFromFileDtos(addFAQDto.getFaqFiles()))
                 .build();
     }
 
-    public static FAQDto from(UpdateFAQDto updateFAQDto, List<FileDto> fileDtos) {
+    public static FAQDto from(UpdateFAQDto updateFAQDto) {
         return FAQDto.builder()
                 .title(updateFAQDto.getTitle())
                 .content(updateFAQDto.getContent())
                 .isOpened(updateFAQDto.getIsOpened())
-                .faqFiles(FAQFileDto.listFromFileDtos(fileDtos))
+                .faqFiles(FAQFileDto.listFromFileDtos(updateFAQDto.getFaqFiles()))
                 .build();
     }
 
@@ -53,6 +54,7 @@ public class FAQDto {
         private String title;
         private String content;
         private Boolean isOpened;
+        private List<FileDto> faqFiles;
     }
 
     @NoArgsConstructor
@@ -62,6 +64,7 @@ public class FAQDto {
         private String title;
         private String content;
         private Boolean isOpened;
+        private List<FileDto> faqFiles;
     }
 
     @Builder
@@ -71,6 +74,7 @@ public class FAQDto {
         private String title;
         private String content;
         private Boolean isOpened;
+        private LocalDateTime createdDate;
         private List<FAQFileDto> faqFiles;
 
         public static ResAdminFAQDto from(FAQ faq) {
@@ -79,6 +83,7 @@ public class FAQDto {
                     .title(faq.getTitle())
                     .content(faq.getContent())
                     .isOpened(faq.getIsOpened())
+                    .createdDate(faq.getCreatedDate())
                     .faqFiles(FAQFileDto.listFromFAQFiles(faq.getFaqFiles()))
                     .build();
         }
@@ -90,6 +95,7 @@ public class FAQDto {
                             .title(faq.getTitle())
                             .content(faq.getContent())
                             .isOpened(faq.getIsOpened())
+                            .createdDate(faq.getCreatedDate())
                             .build())
                     .toList();
         }
@@ -101,6 +107,7 @@ public class FAQDto {
         private Long id;
         private String title;
         private String content;
+        private LocalDateTime createdDate;
         private List<FAQFileDto> faqFiles;
 
         public static ResFAQDto from(FAQ faq) {
@@ -108,6 +115,7 @@ public class FAQDto {
                     .id(faq.getId())
                     .title(faq.getTitle())
                     .content(faq.getContent())
+                    .createdDate(faq.getCreatedDate())
                     .faqFiles(FAQFileDto.listFromFAQFiles(faq.getFaqFiles()))
                     .build();
         }
@@ -118,6 +126,7 @@ public class FAQDto {
                             .id(faq.getId())
                             .title(faq.getTitle())
                             .content(faq.getContent())
+                            .createdDate(faq.getCreatedDate())
                             .build())
                     .toList();
         }
