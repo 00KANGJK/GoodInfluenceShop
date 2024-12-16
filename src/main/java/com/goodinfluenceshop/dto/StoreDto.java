@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -35,7 +36,7 @@ public class StoreDto {
      private String storePhoneNumber; // 매장 번호
      private String storeAddress; // 매장 주소
      private String storeDetailAddress; // 상세 주소
-     private String enrollDate; // 신청일자
+     private LocalDate enrollDate; // 신청일자
      private Boolean depositCheck; // 입금 확인
      private Boolean stickerSend; // 스티커 발송
      private Boolean kitSend; // 키트 발송
@@ -68,6 +69,7 @@ public class StoreDto {
      private String storeImgInside; // 가게 내부 이미지
      private String storeImgMenupan; // 메뉴판 이미지
      private String storeImgMenu; // 대표 메뉴 이미지
+
 
 
 }

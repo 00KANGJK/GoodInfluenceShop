@@ -3,11 +3,13 @@ package com.goodinfluenceshop.service;
 import com.goodinfluenceshop.domain.Store;
 import com.goodinfluenceshop.dto.StoreDto;
 import com.goodinfluenceshop.enums.Category;
+import com.goodinfluenceshop.enums.MembershipLevel;
 import com.goodinfluenceshop.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -159,5 +161,51 @@ public class StoreService {
             throw new IllegalArgumentException("입력하신 정보를 다시 한번 확인해 주세요.");
         }
     }
+
+
+    // 날짜 범위에 맞는 Store 리스트 반환
+    public List<StoreDto> getStoresByEnrollDate(LocalDate startDate, LocalDate endDate) {
+        return storeRepository.findAllByEnrollDateBetween(startDate, endDate).stream()
+                .map(store -> modelMapper.map(store, StoreDto.class)) // Entity -> DTO 변환
+                .collect(Collectors.toList());
+    }
+
+    // 날짜 기준 + 단일 조건 필터링
+    public List<StoreDto> getStoresWithSingleFilter(LocalDate startDate, LocalDate endDate,
+                                                    MembershipLevel level, Boolean depositCheck,
+                                                    Boolean stickerSend, Boolean kitSend,
+                                                    Category businessTypeBig) {
+        // 날짜 범위 내 모든 데이터를 가져옵니다.
+        List<Store> stores = storeRepository.findAllByEnrollDateBetween(startDate, endDate);
+
+        // 단일 조건에 따라 필터링
+        if (level != null) {
+            stores = stores.stream()
+                    .filter(store -> store.getLevel().equals(level))
+                    .collect(Collectors.toList());
+        } else if (depositCheck != null) {
+            stores = stores.stream()
+                    .filter(store -> store.getDepositCheck().equals(depositCheck))
+                    .collect(Collectors.toList());
+        } else if (stickerSend != null) {
+            stores = stores.stream()
+                    .filter(store -> store.getStickerSend().equals(stickerSend))
+                    .collect(Collectors.toList());
+        } else if (kitSend != null) {
+            stores = stores.stream()
+                    .filter(store -> store.getKitSend().equals(kitSend))
+                    .collect(Collectors.toList());
+        } else if (businessTypeBig != null) {
+            stores = stores.stream()
+                    .filter(store -> store.getBusinessTypeBig().equals(businessTypeBig))
+                    .collect(Collectors.toList());
+        }
+
+        // Entity -> DTO 변환 후 반환
+        return stores.stream()
+                .map(store -> modelMapper.map(store, StoreDto.class))
+                .collect(Collectors.toList());
+    }
+
 }
 
