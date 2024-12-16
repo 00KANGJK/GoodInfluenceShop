@@ -6,18 +6,23 @@ import com.goodinfluenceshop.enums.MembershipLevel;
 import com.goodinfluenceshop.enums.ProvideTarget1;
 import com.goodinfluenceshop.enums.ProvideTarget2;
 import com.goodinfluenceshop.enums.SnsType;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class StoreDto {
      private int no; // 번호
      private String businessNumber; // 사업자 번호
@@ -63,4 +68,6 @@ public class StoreDto {
      private String storeImgInside; // 가게 내부 이미지
      private String storeImgMenupan; // 메뉴판 이미지
      private String storeImgMenu; // 대표 메뉴 이미지
+
+
 }

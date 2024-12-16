@@ -141,5 +141,23 @@ public class StoreService {
     public void deleteStore(int no) {
         storeRepository.deleteById(no);
     }
+
+    public String findEmail(String ceoName, String phoneNumber){
+        Store store = storeRepository.findAllByPhoneNumberAndCeoName(phoneNumber, ceoName);
+        if (store != null && store.getCeoName().equals(ceoName)) {
+            return store.getStoreEmail(); // 이메일 반환
+        } else {
+            throw new IllegalArgumentException("입력하신 정보를 다시 한번 확인해 주세요.");
+        }
+    }
+
+    public String findpassword(String ceoName, String phoneNumber, String storeEmail){
+        Store store = storeRepository.findAllByPhoneNumberAndCeoNameAndStoreEmail(phoneNumber, ceoName, storeEmail);
+        if (store != null && store.getCeoName().equals(ceoName)) {
+            return store.getPassword(); // 이메일 반환
+        } else {
+            throw new IllegalArgumentException("입력하신 정보를 다시 한번 확인해 주세요.");
+        }
+    }
 }
 
