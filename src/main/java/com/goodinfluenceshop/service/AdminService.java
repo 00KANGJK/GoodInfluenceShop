@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AdminService {
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   private final AdminRepository adminRepository;
   private final AuthService authService;
@@ -35,22 +34,18 @@ public class AdminService {
     System.out.println("refreshToken ?!!! : " + param);
     String accessToken = authService.issueAccessToken(param);
 
-    return AdminDto.CreateResDto.builder().id(accessToken).build();
-  }
-
-  public AdminDto.CreateResDto logout(DefaultDto.DetailReqDto param){
-    return AdminDto.CreateResDto.builder().id("logout").build();
+    return AdminDto.CreateResDto.builder().accessToken(accessToken).build();
   }
 
   public AdminDto.CreateResDto login(AdminDto.LoginReqDto param){
     Admin admin = adminRepository.findByEmailAndPassword(param.getEmail(), param.getPassword());
     if(admin == null){
-      return AdminDto.CreateResDto.builder().id("not matched").build();
+      return AdminDto.CreateResDto.builder().accessToken("not matched").build();
     }
     TokenGenerator tokenGenerator = new TokenGenerator();
     String refreshToken = tokenGenerator.issueRefreshToken(admin.getId());
 
-    return AdminDto.CreateResDto.builder().id(refreshToken).build();
+    return AdminDto.CreateResDto.builder().accessToken(refreshToken).build();
   }
 
   public AdminDto.CreateResDto signup(AdminDto.SignupReqDto param){

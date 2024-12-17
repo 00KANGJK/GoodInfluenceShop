@@ -40,7 +40,7 @@ public class AdminDto {
   @Builder
   @Getter
   public static class CreateResDto {
-    private String id;
+    private String accessToken;
   }
 
   @Builder

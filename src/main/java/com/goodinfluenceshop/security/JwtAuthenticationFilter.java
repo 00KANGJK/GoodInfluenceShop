@@ -28,13 +28,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	private final AuthService authService;
 	private final ExternalProperties externalProperties;
 
-	/**
-     *  로그인하려는 사용자의 자격을 확인해 토큰을 발급하는 함수.
-	 *  "/api/login" 으로 들어오는 요청에 실행된다.
-	 *  생성된 Authentication이 SecurityContextHolder에 등록되어 권한처리가 가능하게 한다.
-	 *
-	 *  @throws AuthenticationException
-	 */
 	@Transactional
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 		Authentication authentication = null;
@@ -55,10 +48,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		return authentication;
 	}
 
-	/**
-     *  로그인 완료시 호출되는 함수.
-     *  Refresh Token을 발급해 HttpServletRespons에 담는다.
-	 */
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 		PrincipalDetails principalDetails = (PrincipalDetails)authResult.getPrincipal();

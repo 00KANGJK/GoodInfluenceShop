@@ -49,7 +49,7 @@ public class Admin {
   public AdminDto.CreateResDto toCreateResDto() {
     return AdminDto.CreateResDto
       .builder()
-      .id(this.getId())
+      .accessToken(this.getId())
       .build();
   }
 

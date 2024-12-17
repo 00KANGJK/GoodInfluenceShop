@@ -6,11 +6,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public abstract class StoreBaseEntity {
     private String storeTitle; // 가게명
 
     @Column(nullable = false)
-    private String enrollDate; // 신청일자
+    private LocalDate enrollDate; // 신청일자
 
     @Column(nullable = false)
     private Boolean depositCheck; // 입금 확인

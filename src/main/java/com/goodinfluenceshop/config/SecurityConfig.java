@@ -65,14 +65,22 @@ public class SecurityConfig {
     @Override
     public void configure(HttpSecurity http) throws Exception {
       AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-      JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, objectMapper, authService, externalProperties);
-      System.out.println("jwtAuthenticationFilter : " + jwtAuthenticationFilter);
-      jwtAuthenticationFilter.setFilterProcessesUrl("/api/all/login");
 
+      // 관리자 로그인 필터
+      JwtAuthenticationFilter adminLoginFilter = new JwtAuthenticationFilter(authenticationManager, objectMapper, authService, externalProperties);
+      adminLoginFilter.setFilterProcessesUrl("/api/login/admin"); // 관리자 로그인 경로
+
+      // 일반 사용자 로그인 필터
+      JwtAuthenticationFilter userLoginFilter = new JwtAuthenticationFilter(authenticationManager, objectMapper, authService, externalProperties);
+      userLoginFilter.setFilterProcessesUrl("/api/login"); // 일반 사용자 로그인 경로
+
+      // 필터 추가
       http.addFilter(corsFilterConfiguration.corsFilter())
-        .addFilter(jwtAuthenticationFilter)
+        .addFilter(adminLoginFilter) // 관리자 로그인 필터 추가
+        .addFilter(userLoginFilter)  // 일반 사용자 로그인 필터 추가
         .addFilter(new JwtAuthorizationFilter(authenticationManager, adminRepository, authService, externalProperties))
         .addFilterBefore(new FilterExceptionHandlerFilter(), BasicAuthenticationFilter.class);
     }
   }
+
 }

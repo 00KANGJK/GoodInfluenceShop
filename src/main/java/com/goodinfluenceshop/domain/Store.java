@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,7 @@ public class Store extends StoreBaseEntity {
     public Store() {
     }
 
-    public Store(MembershipLevel level, String storeTitle, String enrollDate, Boolean depositCheck, Boolean stickerSend, Boolean kitSend, Boolean seeAvailable, Category businessTypeBig, Enum<?> businessTypeMiddle, String businessNumber, Boolean opened, String ceoName, String storeEmail, String phoneNumber, String password, String storePhoneNumber, String storeAddress, String storeDetailAddress, String openTime, String closeTime, String openBreakTime, String closeBreakTime, List<String> holiDays, ProvideTarget1 provideTarget1, List<ProvideTarget2> provideTarget2, SnsType snsType1, String snsType1Url, SnsType snsType2, String snsType2Url, String storeImgCI, String storeImgFront, String storeImgInside, String storeImgMenupan, String storeImgMenu, List<com.goodinfluenceshop.common.ProvideItem> provideItems) {
+    public Store(MembershipLevel level, String storeTitle, LocalDate enrollDate, Boolean depositCheck, Boolean stickerSend, Boolean kitSend, Boolean seeAvailable, Category businessTypeBig, Enum<?> businessTypeMiddle, String businessNumber, Boolean opened, String ceoName, String storeEmail, String phoneNumber, String password, String storePhoneNumber, String storeAddress, String storeDetailAddress, String openTime, String closeTime, String openBreakTime, String closeBreakTime, List<String> holiDays, ProvideTarget1 provideTarget1, List<ProvideTarget2> provideTarget2, SnsType snsType1, String snsType1Url, SnsType snsType2, String snsType2Url, String storeImgCI, String storeImgFront, String storeImgInside, String storeImgMenupan, String storeImgMenu, List<com.goodinfluenceshop.common.ProvideItem> provideItems) {
         this.setLevel(level);
         this.setStoreTitle(storeTitle);
         this.setEnrollDate(enrollDate);

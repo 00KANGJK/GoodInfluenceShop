@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/all")
+@RequestMapping("/api/login/admin")
 @RestController
 @RequiredArgsConstructor
 public class LoginResController {
@@ -25,17 +25,7 @@ public class LoginResController {
     return ResponseEntity.status(HttpStatus.OK).body(adminService.access(refreshToken));
   }
 
-  @PostMapping("/logout")
-  public ResponseEntity<AdminDto.CreateResDto> logout(HttpServletRequest request) {
-    String reqAdminId = request.getAttribute("reqAdminId") + "";
-    if (request.getAttribute("reqAdminId") == null) {
-      throw new RuntimeException("should login");
-    }
-    DefaultDto.DetailReqDto param = DefaultDto.DetailReqDto.builder().id(reqAdminId).build();
-    return ResponseEntity.status(HttpStatus.OK).body(adminService.logout(param));
-  }
-
-  @PostMapping("/login")
+  @PostMapping
   public ResponseEntity<AdminDto.CreateResDto> login(@Valid @RequestBody AdminDto.LoginReqDto param) {
     return ResponseEntity.status(HttpStatus.CREATED).body(adminService.login(param)); // adminService 사용
   }
@@ -45,19 +35,4 @@ public class LoginResController {
     AdminDto.CreateResDto response = adminService.signup(param);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
-
-  @PostMapping("")
-  public ResponseEntity<AdminDto.CreateResDto> create(@Valid @RequestBody AdminDto.CreateReqDto param) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(adminService.create(param)); // adminService 사용
-  }
-
-//  @PutMapping("")
-//  public ResponseEntity<AdminDto.CreateResDto> update(@Valid @RequestBody AdminDto.UpdateReqDto param) {
-//    return ResponseEntity.status(HttpStatus.OK).body(adminService.update(param)); // adminService 사용
-//  }
-//
-//  @GetMapping("")
-//  public ResponseEntity<AdminDto.DetailResDto> detail(@Valid DefaultDto.DetailReqDto param, HttpServletRequest request) {
-//    return ResponseEntity.status(HttpStatus.OK).body(adminService.detail(param)); // adminService 사용
-//  }
 }
