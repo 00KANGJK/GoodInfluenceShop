@@ -1,20 +1,18 @@
 package com.goodinfluenceshop.controller;
 
 import com.goodinfluenceshop.dto.login.AdminDto;
-import com.goodinfluenceshop.dto.login.DefaultDto;
 import com.goodinfluenceshop.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/login/admin")
 @RestController
 @RequiredArgsConstructor
-public class LoginResController {
+public class AdminLoginResController {
 
   private final AdminService adminService;
 
