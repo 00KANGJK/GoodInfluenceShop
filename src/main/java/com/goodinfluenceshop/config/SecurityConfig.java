@@ -10,6 +10,7 @@ import com.goodinfluenceshop.service.AuthService;
 import com.goodinfluenceshop.util.ExternalProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -50,15 +51,17 @@ public class SecurityConfig {
       .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .formLogin(AbstractHttpConfigurer::disable)
       .httpBasic(AbstractHttpConfigurer::disable)
-      .addFilter(corsFilterConfiguration.corsFilter())
       .authorizeHttpRequests(auth -> {
-        auth.requestMatchers("/api/admin/**").hasAuthority("ADMIN") // 관리자만 접근 가능
-          .anyRequest().permitAll(); // 그 외 요청은 인증 필요
+        auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONS 요청 허용
+          .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+          .anyRequest().permitAll();
       })
+      .addFilterBefore(corsFilterConfiguration.corsFilter(), BasicAuthenticationFilter.class) // CORS 필터 추가
       .apply(new CustomDsl());
 
     return http.build();
   }
+
 
   public class CustomDsl extends AbstractHttpConfigurer<CustomDsl, HttpSecurity> {
 
