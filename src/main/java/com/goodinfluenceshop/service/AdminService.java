@@ -34,18 +34,18 @@ public class AdminService {
     System.out.println("refreshToken ?!!! : " + param);
     String accessToken = authService.issueAccessToken(param);
 
-    return AdminDto.CreateResDto.builder().accessToken(accessToken).build();
+    return AdminDto.CreateResDto.builder().id(accessToken).build();
   }
 
   public AdminDto.CreateResDto login(AdminDto.LoginReqDto param){
     Admin admin = adminRepository.findByEmailAndPassword(param.getEmail(), param.getPassword());
     if(admin == null){
-      return AdminDto.CreateResDto.builder().accessToken("not matched").build();
+      return AdminDto.CreateResDto.builder().id("not matched").build();
     }
     TokenGenerator tokenGenerator = new TokenGenerator();
     String refreshToken = tokenGenerator.issueRefreshToken(admin.getId());
 
-    return AdminDto.CreateResDto.builder().accessToken(refreshToken).build();
+    return AdminDto.CreateResDto.builder().id(refreshToken).build();
   }
 
   public AdminDto.CreateResDto signup(AdminDto.SignupReqDto param){
