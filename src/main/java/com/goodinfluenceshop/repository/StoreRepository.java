@@ -13,4 +13,6 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
     Store findAllByPhoneNumberAndCeoNameAndStoreEmail(String phoneNumber, String ceoName, String storeEmail);
 
     List<Store> findAllByEnrollDateBetween(LocalDate startDate, LocalDate endDate);
+
+    Store findByStoreEmail(String storeEmail);
 }

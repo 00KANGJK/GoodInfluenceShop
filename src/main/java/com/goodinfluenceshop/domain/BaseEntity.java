@@ -25,6 +25,10 @@ public abstract class BaseEntity {
     @Setter
     protected String deleted; // 삭제여부
 
+    @Column(nullable = true)
+    @Setter
+    protected String process;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate
     @Column(nullable = false, updatable = false)
