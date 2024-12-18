@@ -1,6 +1,14 @@
 
 
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    defer-datasource-initialization: true
   application:
     name: GoodInfluenceShop
   config:
