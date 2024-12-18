@@ -1,9 +1,6 @@
 package com.goodinfluenceshop.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -15,4 +12,10 @@ public class DonationDto {
   private int totalCount;
   private int totalSpend;
   private int totalChildrenCount;
+
+  @Builder
+  @Getter
+  public static class GetChildrenDto {
+    private int totalChildrenCount;
+  }
 }
