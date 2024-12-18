@@ -16,5 +16,4 @@ public class Donation extends BaseEntity{
   private int totalCount;
   private int totalSpend;
   private int totalChildrenCount;
-
 }
