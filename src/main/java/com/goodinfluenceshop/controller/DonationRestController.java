@@ -24,4 +24,9 @@ public class DonationRestController {
     DonationDto donations = donationService.getRecentDonation();
     return new ResponseEntity<>(donations, HttpStatus.OK);
   }
+
+  @GetMapping("/all/donations/total-children-count")
+  public DonationDto.GetChildrenDto getTotalChildrenCount() {
+    return donationService.getTotalChildrenCount();
+  }
 }

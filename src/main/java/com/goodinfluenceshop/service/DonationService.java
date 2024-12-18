@@ -38,6 +38,18 @@ public class DonationService {
     return convertToDto(donation);
   }
 
+  public DonationDto.GetChildrenDto getTotalChildrenCount() {
+    Integer latestTotalChildrenCount = donationRepository.findLatestTotalChildrenCount();
+
+    if (latestTotalChildrenCount == null) {
+      latestTotalChildrenCount = 0;
+    }
+
+    return DonationDto.GetChildrenDto.builder()
+      .totalChildrenCount(latestTotalChildrenCount)
+      .build();
+  }
+
 //  public void deleteDonation(Long id) {
 //    Donation donation = donationRepository.findById(id)
 //      .orElseThrow(() -> new EntityNotFoundException("Donation not found"));
