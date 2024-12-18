@@ -6,7 +6,11 @@ spring:
   config:
     import: classpath:s3.yml
   datasource:
-    url: jdbc:h2:mem:fixed_db  # 고정된 데이터베이스 이름 사용
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://walab.handong.edu:3306/p3_21900613?useSSL=false
+    username: p3_21900613
+    password: a5hS7Fzm6MGoWBLH
+
 server:
   servlet:
     encoding:

@@ -22,6 +22,7 @@ public class CorsFilterConfiguration {
       String[] arrays = {"Authorization", "RefreshToken"};
       config.setAllowedHeaders(Arrays.asList(arrays));
       source.registerCorsConfiguration("/api/**", config);
+      config.setAllowedOrigins(Arrays.asList("http://localhost:3000","https://ginfluencer-admin-front.vercel.app"));
       return new CorsFilter(source);
    }
 }
