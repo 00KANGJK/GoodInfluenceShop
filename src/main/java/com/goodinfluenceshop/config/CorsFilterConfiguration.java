@@ -8,25 +8,22 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
-//헤더에 담을 내용도 확인!!
 @Configuration
 public class CorsFilterConfiguration {
+
   @Bean
   public CorsFilter corsFilter() {
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowCredentials(true);
     config.setAllowedOrigins(Arrays.asList(
-      "http://localhost:3000",
-      "https://ginfluencer-client-front.vercel.app",
-      "https://ginfluencer-admin-front.vercel.app"
+            "http://localhost:3000",
+            "https://ginfluencer-client-front.vercel.app",
+            "https://ginfluencer-admin-front.vercel.app"
     ));
-    config.addAllowedHeader("*");
-    config.addAllowedMethod("*");
-    String[] arrays = {"Authorization", "RefreshToken"};
-    config.setAllowedHeaders(Arrays.asList(arrays));
-    source.registerCorsConfiguration("/api/**", config);
+    config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization", "RefreshToken"));
     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+    source.registerCorsConfiguration("/**", config);
     return new CorsFilter(source);
   }
 }
