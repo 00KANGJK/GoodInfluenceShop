@@ -4,7 +4,6 @@ import com.goodinfluenceshop.domain.Admin;
 import com.goodinfluenceshop.domain.AdminRoleType;
 import com.goodinfluenceshop.domain.RoleType;
 import com.goodinfluenceshop.dto.login.AdminDto;
-import com.goodinfluenceshop.dto.login.DefaultDto;
 import com.goodinfluenceshop.enums.LoginRoleType;
 import com.goodinfluenceshop.repository.AdminRepository;
 import com.goodinfluenceshop.repository.AdminRoleTypeRepository;
@@ -13,8 +12,6 @@ import com.goodinfluenceshop.util.TokenGenerator;
 import com.goodinfluenceshop.repository.RoleTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
