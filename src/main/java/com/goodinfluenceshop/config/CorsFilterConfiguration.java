@@ -26,6 +26,7 @@ public class CorsFilterConfiguration {
     String[] arrays = {"Authorization", "RefreshToken"};
     config.setAllowedHeaders(Arrays.asList(arrays));
     source.registerCorsConfiguration("/api/**", config);
+    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
     return new CorsFilter(source);
   }
 }
