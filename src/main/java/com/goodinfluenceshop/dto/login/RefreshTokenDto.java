@@ -1,5 +1,6 @@
 package com.goodinfluenceshop.dto.login;
 
+import com.goodinfluenceshop.domain.Admin;
 import com.goodinfluenceshop.domain.RefreshToken;
 import lombok.*;
 
@@ -11,10 +12,10 @@ public class RefreshTokenDto {
   @AllArgsConstructor
   public static class CreateReqDto {
     private String content;
-    private String adminId;
+    private Admin admin;
 
     public RefreshToken toEntity() {
-      return RefreshToken.of(content, adminId);
+      return RefreshToken.of(content, admin);
     }
   }
   @Getter

@@ -16,21 +16,35 @@ public class AdminLoginResController {
 
   private final AdminService adminService;
 
-  @PostMapping("/access")
-  public ResponseEntity<AdminDto.CreateResDto> access(HttpServletRequest request) throws Exception {
-    String refreshToken = request.getHeader("refreshToken");
-    System.out.println("refreshToken : " + refreshToken);
-    return ResponseEntity.status(HttpStatus.OK).body(adminService.access(refreshToken));
-  }
-
-  @PostMapping
-  public ResponseEntity<AdminDto.CreateResDto> login(@Valid @RequestBody AdminDto.LoginReqDto param) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(adminService.login(param)); // adminService 사용
-  }
-
-  @PostMapping(value = "/signup")
+  /**
+   * 회원가입
+   */
+  @PostMapping("/signup")
   public ResponseEntity<AdminDto.CreateResDto> signup(@Valid @RequestBody AdminDto.SignupReqDto param) {
     AdminDto.CreateResDto response = adminService.signup(param);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
+
+  /**
+   * 로그인
+   */
+  @PostMapping
+  public ResponseEntity<AdminDto.CreateResDto> login(@Valid @RequestBody AdminDto.LoginReqDto param) {
+    AdminDto.CreateResDto response = adminService.login(param);
+    return ResponseEntity.status(HttpStatus.OK).body(response);
+  }
+
+  /**
+   * Refresh Token을 기반으로 Access Token 발급
+   */
+  @PostMapping("/access")
+  public ResponseEntity<String> issueAccessToken(HttpServletRequest request) {
+    String refreshToken = request.getHeader("refreshToken");
+    if (refreshToken == null || refreshToken.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing refreshToken header");
+    }
+
+    String accessToken = adminService.issueAccessToken(refreshToken);
+    return ResponseEntity.status(HttpStatus.OK).body(accessToken);
   }
 }
