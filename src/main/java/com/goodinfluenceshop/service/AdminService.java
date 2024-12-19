@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AdminService {
@@ -25,59 +27,78 @@ public class AdminService {
   private final ExternalProperties externalProperties;
   private final RoleTypeRepository roleTypeRepository;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
-  private final AdminRoleTypeRepository tbuserRoleTypeRepository;
+  private final AdminRoleTypeRepository adminRoleTypeRepository;
   private final RefreshTokenRepository refreshTokenRepository;
 
-  public AdminDto.CreateResDto access(String param) throws Exception {
+  /**
+   * 회원가입
+   */
+  public AdminDto.CreateResDto signup(AdminDto.SignupReqDto param) {
+    // 이메일 중복 확인
+    Optional<Admin> existingAdmin = Optional.ofNullable(adminRepository.findByEmail(param.getEmail()));
+    if (existingAdmin.isPresent()) {
+      throw new IllegalArgumentException("Email이 이미 존재합니다.");
+    }
 
-    param = param.replace(externalProperties.getTokenPrefix(), "");
-    System.out.println("refreshToken ?!!! : " + param);
-    String accessToken = authService.issueAccessToken(param);
+    // 비밀번호 암호화
+    String encodedPassword = bCryptPasswordEncoder.encode(param.getPassword());
 
-    return AdminDto.CreateResDto.builder().id(accessToken).build();
+    // Admin 생성 및 저장
+    Admin admin = Admin.builder()
+      .email(param.getEmail())
+      .password(encodedPassword)
+      .name(param.getName())
+      .build();
+
+    admin = adminRepository.save(admin);
+
+    // 기본 Role 추가
+    RoleType roleType = roleTypeRepository.findByRoleType(LoginRoleType.ADMIN)
+      .orElseGet(() -> {
+        RoleType newRoleType = new RoleType();
+        newRoleType.setRoleType(LoginRoleType.ADMIN);
+        return roleTypeRepository.save(newRoleType);
+      });
+
+    AdminRoleType adminRoleType = AdminRoleType.of(admin, roleType);
+    adminRoleTypeRepository.save(adminRoleType);
+
+    return admin.toCreateResDto();
   }
 
-  public AdminDto.CreateResDto login(AdminDto.LoginReqDto param){
-    Admin admin = adminRepository.findByEmailAndPassword(param.getEmail(), param.getPassword());
-    if(admin == null){
-      return AdminDto.CreateResDto.builder().id("not matched").build();
+  /**
+   * Admin 로그인 메서드
+   *
+   * @param param Admin 로그인 요청 DTO
+   * @return Admin 로그인 응답 DTO (Refresh Token 포함)
+   */
+  public AdminDto.CreateResDto login(AdminDto.LoginReqDto param) {
+    // Admin 사용자 인증
+    Admin admin = adminRepository.findByEmail(param.getEmail());
+    if(admin == null) {
+      throw new IllegalArgumentException("email 또는 password 유효하지 않습니다.");
     }
-    // 기존 Refresh Token 제거
-    refreshTokenRepository.deleteByAdminId(admin.getId());
 
-    // 새 Refresh Token 생성
-    TokenGenerator tokenGenerator = new TokenGenerator();
-    String newRefreshToken = tokenGenerator.issueRefreshToken(admin.getId());
+    // 비밀번호 검증
+    if (!bCryptPasswordEncoder.matches(param.getPassword(), admin.getPassword())) {
+      throw new IllegalArgumentException("email 또는 password 유효하지 않습니다.");
+    }
 
-    // 새 Refresh Token 저장
-    RefreshToken refreshToken = new RefreshToken(admin.getId(), newRefreshToken);
-    refreshTokenRepository.save(refreshToken);
+    refreshTokenRepository.markDeletedByAdmin(admin);
 
-    // 새 토큰 반환
+    String newRefreshToken = authService.createRefreshToken(admin.getId());
+
     return AdminDto.CreateResDto.builder().id(newRefreshToken).build();
   }
 
-  public AdminDto.CreateResDto signup(AdminDto.SignupReqDto param){
-    AdminDto.CreateReqDto newParam = AdminDto.CreateReqDto.builder().email(param.getEmail()).password(param.getPassword()).build();
-    return create(newParam);
-  }
+  /**
+   * Refresh Token을 기반으로 Access Token 발급
+   */
+  public String issueAccessToken(String refreshToken) {
+    // Refresh Token 검증
+    String adminId = authService.verifyRefreshToken(refreshToken);
 
-  public AdminDto.CreateResDto create(AdminDto.CreateReqDto param) {
-    //비번 암호화를 위한 코드\
-    param.setPassword(bCryptPasswordEncoder.encode(param.getPassword()));
-
-    //사용자 등록 완료!/
-    Admin admin = adminRepository.save(param.toEntity());
-
-    RoleType roleType = roleTypeRepository.findByRoleType(LoginRoleType.ADMIN);
-    if(roleType == null){
-      roleType = new RoleType();
-      roleType.setRoleType(LoginRoleType.ADMIN);
-      roleTypeRepository.save(roleType);
-    }
-    AdminRoleType adminRoleType = AdminRoleType.of(admin, roleType);
-    System.out.println("adminRoleType : " + adminRoleType.getRoleType().getRoleType());
-    tbuserRoleTypeRepository.save(adminRoleType);
-    return admin.toCreateResDto();
+    // Access Token 생성
+    return authService.createAccessToken(adminId);
   }
 }

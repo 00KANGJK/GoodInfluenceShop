@@ -1,6 +1,6 @@
 package com.goodinfluenceshop.domain;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,16 +9,21 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-public class RefreshToken extends BaseEntity{
-  private String content;
-  private String adminId;
+public class RefreshToken extends BaseEntity {
 
-  public RefreshToken(String content, String adminId) {
+  @Column(nullable = false, length = 2000)
+  private String content;
+
+  @ManyToOne(fetch = FetchType.LAZY, optional = false) // Many-to-One 관계 설정
+  @JoinColumn(name = "admin_id", nullable = false) // 외래 키 설정
+  private Admin admin;
+
+  public RefreshToken(String content, Admin admin) {
     this.content = content;
-    this.adminId = adminId;
+    this.admin = admin;
   }
 
-  public static RefreshToken of(String content, String adminId) {
-        return new RefreshToken(content, adminId);
+  public static RefreshToken of(String content, Admin admin) {
+    return new RefreshToken(content, admin);
   }
 }

@@ -16,6 +16,7 @@ import java.util.UUID;
 @Builder
 @Setter
 public class Admin {
+
   @Id
   private String id; // ID를 String으로 정의
 
@@ -23,12 +24,15 @@ public class Admin {
   private String password;
   private String name;
 
-  private String deleted; // 삭제여부
+  private String deleted; // 삭제 여부
   private LocalDateTime createdDate; // 생성일시
   private LocalDateTime modifyDate; // 수정일시
 
   @OneToMany(mappedBy = "admin", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<AdminRoleType> adminRoleTypes = new ArrayList<>();
+
+  @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<RefreshToken> refreshTokens = new ArrayList<>(); // RefreshToken과의 관계
 
   @PrePersist
   public void onPrePersist() {
@@ -57,5 +61,4 @@ public class Admin {
   public void onPreUpdate() {
     this.modifyDate = LocalDateTime.now(); // 수정 시 수정일시 업데이트
   }
-
 }
