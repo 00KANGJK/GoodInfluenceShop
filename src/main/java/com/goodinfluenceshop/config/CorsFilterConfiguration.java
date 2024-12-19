@@ -23,6 +23,8 @@ public class CorsFilterConfiguration {
     ));
     config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization", "RefreshToken"));
     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+    config.setExposedHeaders(Arrays.asList("Authorization", "RefreshToken")); // 추가된 부분
+
     source.registerCorsConfiguration("/**", config);
     return new CorsFilter(source);
   }
