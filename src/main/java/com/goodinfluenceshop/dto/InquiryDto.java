@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -123,6 +124,7 @@ public class InquiryDto {
         private Boolean emailChecked;
         private Boolean isSecret;
         private LocalDateTime createdDate;
+        private LocalDateTime answerDate;
 
         public static ResInquiryDto from(Inquiry inquiry) {
             return ResInquiryDto.builder()
@@ -136,6 +138,7 @@ public class InquiryDto {
                     .answer(inquiry.getAnswer())
                     .createdDate(inquiry.getCreatedDate())
                     .isSecret(inquiry.getIsSecret())
+                    .answerDate(inquiry.getAnswerDate())
                     .build();
         }
 
@@ -147,6 +150,7 @@ public class InquiryDto {
                             .title(inquiry.getTitle())
                             .isSecret(inquiry.getIsSecret())
                             .content(inquiry.getContent())
+                            .createdDate(inquiry.getCreatedDate())
                             .build())
                     .toList();
         }
