@@ -2,11 +2,13 @@ package com.goodinfluenceshop.service;
 
 import com.goodinfluenceshop.domain.Admin;
 import com.goodinfluenceshop.domain.AdminRoleType;
+import com.goodinfluenceshop.domain.RefreshToken;
 import com.goodinfluenceshop.domain.RoleType;
 import com.goodinfluenceshop.dto.login.AdminDto;
 import com.goodinfluenceshop.enums.LoginRoleType;
 import com.goodinfluenceshop.repository.AdminRepository;
 import com.goodinfluenceshop.repository.AdminRoleTypeRepository;
+import com.goodinfluenceshop.repository.RefreshTokenRepository;
 import com.goodinfluenceshop.util.ExternalProperties;
 import com.goodinfluenceshop.util.TokenGenerator;
 import com.goodinfluenceshop.repository.RoleTypeRepository;
@@ -24,6 +26,7 @@ public class AdminService {
   private final RoleTypeRepository roleTypeRepository;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
   private final AdminRoleTypeRepository tbuserRoleTypeRepository;
+  private final RefreshTokenRepository refreshTokenRepository;
 
   public AdminDto.CreateResDto access(String param) throws Exception {
 
@@ -39,10 +42,19 @@ public class AdminService {
     if(admin == null){
       return AdminDto.CreateResDto.builder().id("not matched").build();
     }
-    TokenGenerator tokenGenerator = new TokenGenerator();
-    String refreshToken = tokenGenerator.issueRefreshToken(admin.getId());
+    // 기존 Refresh Token 제거
+    refreshTokenRepository.deleteByAdminId(admin.getId());
 
-    return AdminDto.CreateResDto.builder().id(refreshToken).build();
+    // 새 Refresh Token 생성
+    TokenGenerator tokenGenerator = new TokenGenerator();
+    String newRefreshToken = tokenGenerator.issueRefreshToken(admin.getId());
+
+    // 새 Refresh Token 저장
+    RefreshToken refreshToken = new RefreshToken(admin.getId(), newRefreshToken);
+    refreshTokenRepository.save(refreshToken);
+
+    // 새 토큰 반환
+    return AdminDto.CreateResDto.builder().id(newRefreshToken).build();
   }
 
   public AdminDto.CreateResDto signup(AdminDto.SignupReqDto param){

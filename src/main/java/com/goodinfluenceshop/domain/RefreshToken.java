@@ -13,7 +13,7 @@ public class RefreshToken extends BaseEntity{
   private String content;
   private String adminId;
 
-  private RefreshToken(String content, String adminId) {
+  public RefreshToken(String content, String adminId) {
     this.content = content;
     this.adminId = adminId;
   }
